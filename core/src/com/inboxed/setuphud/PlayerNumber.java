@@ -34,14 +34,14 @@ public class PlayerNumber {
 		ok = new Sprite(new Texture(Gdx.files.internal("setupHud/ok.png")));
 		left.setBounds(MainGame.width/2 - MainGame.SPRITESIZE*3,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 		right.setBounds(MainGame.width/2 + MainGame.SPRITESIZE*3,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
-		ok.setBounds(MainGame.width/2-20,MainGame.height/3,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
+		ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
 		current = 0;
 	}
 	public void draw(SpriteBatch batch){
 		numbers.get(current).draw(batch);
 		left.draw(batch);
 		right.draw(batch);
-		font.draw(batch, "Number of Players", MainGame.width/2-100,MainGame.height-40);
+		font.draw(batch, "PLAYER SETTINGS", MainGame.width/2-100,MainGame.height-40);
 		ok.draw(batch);
 	}
 	public void input(Vector3 vec){

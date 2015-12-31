@@ -1,7 +1,9 @@
 package com.inboxed.setuphud;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -28,11 +30,24 @@ public class CharacterSelect {
 	public int players;
 	public boolean showing;
 	public ShaderProgram shader;
+	public BitmapFont font;
+	public Array<Sprite> playerDone;
+	public int playerNum;
+	public Sprite ok;
 	public CharacterSelect(int players){
 		this.players = players;
 		showing = false;
 		characters = new Array<Pair<Sprite,String>>();
-		shader = new ShaderProgram("ASD","SAD");
+		ok = new Sprite(new Texture(Gdx.files.internal("setupHud/ok.png")));
+		ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
+		font = new BitmapFont();
+		font.setColor(Color.BLACK);
+		font.getData().setScale(2);
+		playerDone = new Array<Sprite>();
+		for(int i = 1; i <= players; i++){
+			playerDone.add(new Sprite(new Texture(Gdx.files.internal("setupHud/player"+i+".png"))));
+		}
+		playerNum = 0;
 		playerNames = new Array<String>();
 		characters.add(new Pair<Sprite, String>(new Sprite(new Texture(Gdx.files.internal("characters/biospark.png"))),"biospark"));
 		characters.add(new Pair<Sprite, String>(new Sprite(new Texture(Gdx.files.internal("characters/chilly.png"))),"chilly"));
@@ -53,9 +68,14 @@ public class CharacterSelect {
 		}
 	}
 	public void draw(SpriteBatch batch){
+		font.draw(batch, "CHARACTER SELECT", MainGame.width/2-100,MainGame.height-40);
 		for(Pair<Sprite,String> pair : characters){
-			if(!playerNames.contains(pair.string,false)) pair.sprite.draw(batch);
+			pair.sprite.draw(batch);
 		}
+		for(Sprite sprite : playerDone){
+			sprite.draw(batch);
+		}
+		ok.draw(batch);
 	}
 	public void input(Vector3 vec){
 		for(Pair<Sprite,String> pair : characters){
@@ -63,6 +83,10 @@ public class CharacterSelect {
 				if(!playerNames.contains(pair.string,false)){
 					playerNames.add(pair.string);
 					players--;
+
+					playerDone.get(playerNum).setPosition(pair.sprite.getX(),pair.sprite.getY());
+
+					playerNum++;
 					if(players == 0){
 						showing = false;
 						ClassicSetup.stageSelect.showing = true;
