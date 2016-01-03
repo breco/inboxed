@@ -5,15 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Array;
+import com.inboxed.characters.Character;
 import com.inboxed.helpers.ClassicHud;
 import com.inboxed.helpers.ImageController;
 import com.inboxed.helpers.RoundController;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
+import com.inboxed.stages.Clouds;
 import com.inboxed.stages.Forest;
 import com.inboxed.stages.Snowland;
 import com.inboxed.stages.Stage;
-import com.inboxed.characters.Character;
 
 
 public class ClassicMode implements Screen{
@@ -38,6 +39,7 @@ public class ClassicMode implements Screen{
 	public Stage getStage(String name){
 		if(name.equals("forest")) return new Forest(name);
 		if(name.equals("snowland")) return new Snowland(name);
+		if(name.equals("clouds")) return new Clouds(name);
 		else return null;
 	}
 	public ClassicMode(final MainGame game,Array<String> playerNames, String stageName) {

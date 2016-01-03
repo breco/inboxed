@@ -101,14 +101,14 @@ public class TurnController {
 			possibleMoves = current.getPossibleMoves();
 			if(possibleMoves.size == 0 && (abilityButton.used || !current.canAbility()) && current.moves != 0){ // END TURN AND LOSE
 				current.lose = true;
-				ClassicMode.round.playersPlaying--;
+				//ClassicMode.round.playersPlaying--;
 				finish = true;
 				return;
 			}
 			else if(possibleMoves.size == 0 && current.status.contains("arrow")
 					&& (abilityButton.used || !current.canAbility()) && current.moves != 0){
 				current.lose = true;
-				ClassicMode.round.playersPlaying--;
+				//ClassicMode.round.playersPlaying--;
 
 				finish = true;
 			}

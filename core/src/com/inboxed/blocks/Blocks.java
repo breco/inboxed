@@ -28,6 +28,7 @@ public class Blocks {
 		blocks = new Array<Block>();
 		background = new Array<Block>();
 		Random rand = new Random();
+		System.out.println("before loading file");
 		/*int r = 0;
 		int p = 0;
 		for(int i = -6; i < 13; i++){
@@ -103,9 +104,10 @@ public class Blocks {
 		loadFile(name);
 		touchPos = new Vector3();
 		possibles = new Array<Sprite>();
-	
+		System.out.println("SIZE"+blocks.size);
 	}
 	public void loadFile(String name){
+		System.out.println("NAME ->"+name);
 		FileHandle file = Gdx.files.internal("archivos/"+name+".txt");
 		if(!file.exists()) System.out.println("no existe");
 		Random rand = new Random();
@@ -117,8 +119,11 @@ public class Blocks {
 			String[] subline = line.split(",");
 			if(subline[0].equals("B")){
 				System.out.println(line);
-				x = Integer.parseInt(subline[1]);
-				y = Integer.parseInt(subline[2]);
+				if(!subline[4].equals("MO")){
+					x = Integer.parseInt(subline[1]);
+					y = Integer.parseInt(subline[2]);
+				}
+
 				if(subline[4].equals("LI")){
 					blocks.add(new LightningBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
@@ -142,6 +147,15 @@ public class Blocks {
 				}
 				else if(subline[4].equals("TE")){
 					blocks.add(new TeleportBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
+				}
+				else if(subline[4].equals("MO")){
+					System.out.println(subline[1]);
+					for(String num : subline[1].split("_")){
+						System.out.println(num);
+					}
+					System.out.println(subline[1].split("_")[0]);
+					System.out.println(subline[1].split("_")[1]);
+					blocks.add(new MovingBlock(subline[1],rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
 				else{
 					blocks.add(new NormalBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));

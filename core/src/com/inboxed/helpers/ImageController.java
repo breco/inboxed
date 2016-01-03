@@ -51,6 +51,7 @@ public class ImageController {
 			normalPoints.add(new Texture(Gdx.files.internal("points/point-"+i+".png")));
 			specialPoints.add(new Texture(Gdx.files.internal("points/specialPoint-"+i+".png")));
 		}
+		System.out.println("survived?");
 		
 	}
 	public Texture getTexture(String code){
