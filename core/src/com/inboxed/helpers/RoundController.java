@@ -77,6 +77,8 @@ public class RoundController {
 			turnNumber++;
 			if(turnNumber > players.size){
 				turnNumber = 1;
+				roundNumber++;
+				ClassicMode.stage.effect();
 			}
 			turn = new TurnController(players.get(turnNumber-1));
 		}

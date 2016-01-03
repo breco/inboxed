@@ -149,13 +149,7 @@ public class Blocks {
 					blocks.add(new TeleportBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("MO")){
-					System.out.println(subline[1]);
-					for(String num : subline[1].split("_")){
-						System.out.println(num);
-					}
-					System.out.println(subline[1].split("_")[0]);
-					System.out.println(subline[1].split("_")[1]);
-					blocks.add(new MovingBlock(subline[1],rand.nextInt(6)+1,"forest",ClassicMode.images.center));
+					blocks.add(new MovingBlock(subline[1],rand.nextInt(6)+1,"forest",ClassicMode.images.center5));
 				}
 				else{
 					blocks.add(new NormalBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));

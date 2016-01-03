@@ -9,6 +9,7 @@ public class ImageController {
 	public Texture defaultt;
 	//BLOCKS
 	public Texture center, center1, center2,blocked; // Board blocks
+	public Texture center3, center4,center5;
 	public Texture borderC, borderC1, borderC2; // Center BG blocks
 	public Texture borderD, borderD1, borderD2; // Bottom BG blocks
 	public Texture borderL, borderL1, borderL2; // Left BG blocks
@@ -25,6 +26,9 @@ public class ImageController {
 		if (Gdx.files.internal("blocks/"+name+"/0.png").exists()) center =   new Texture(Gdx.files.internal("blocks/"+name+"/0.png"));
 		if (Gdx.files.internal("blocks/"+name+"/1.png").exists()) center1 =  new Texture(Gdx.files.internal("blocks/"+name+"/1.png"));
 		if (Gdx.files.internal("blocks/"+name+"/2.png").exists()) center2 =  new Texture(Gdx.files.internal("blocks/"+name+"/2.png"));
+		if (Gdx.files.internal("blocks/"+name+"/3.png").exists()) center3 =  new Texture(Gdx.files.internal("blocks/"+name+"/3.png"));
+		if (Gdx.files.internal("blocks/"+name+"/4.png").exists()) center4 =  new Texture(Gdx.files.internal("blocks/"+name+"/4.png"));
+		if (Gdx.files.internal("blocks/"+name+"/5.png").exists()) center5 =  new Texture(Gdx.files.internal("blocks/"+name+"/5.png"));
 		if (Gdx.files.internal("blocks/"+name+"/blocked.png").exists()) blocked =  new Texture(Gdx.files.internal("blocks/"+name+"/blocked.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderC0.png").exists()) borderC =  new Texture(Gdx.files.internal("blocks/"+name+"/borderC0.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderC1.png").exists()) borderC1 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC1.png"));
@@ -51,7 +55,7 @@ public class ImageController {
 			normalPoints.add(new Texture(Gdx.files.internal("points/point-"+i+".png")));
 			specialPoints.add(new Texture(Gdx.files.internal("points/specialPoint-"+i+".png")));
 		}
-		System.out.println("survived?");
+
 		
 	}
 	public Texture getTexture(String code){
