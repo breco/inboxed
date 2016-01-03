@@ -1,7 +1,9 @@
 package com.inboxed.setuphud;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -14,7 +16,8 @@ public class StageSelect {
 	public Array<Pair<com.badlogic.gdx.graphics.g2d.Sprite, java.lang.String>> stages;
 	public boolean showing;
 	public String current;
-	public Sprite ok;
+	public Sprite ok,selected;
+	public BitmapFont font;
 	
 	@SuppressWarnings("hiding")
 	private class Pair<Sprite,String>{
@@ -26,10 +29,15 @@ public class StageSelect {
 		}
 	}
 	public StageSelect(){
+		font =  new BitmapFont();
+		font.setColor(Color.BLACK);
+		font.getData().setScale(2);
 		showing = false;
 		current = "";
 		ok = new Sprite(new Texture(Gdx.files.internal("setupHud/ok.png")));
 		ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
+		selected = new Sprite(new Texture(Gdx.files.internal("setupHud/selected.png")));
+		selected.setBounds(-100,-100,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 		stages = new Array<Pair<Sprite,String>>();
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/forest/blocked.png"))),"forest"));
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/snowland/blocked.png"))),"snowland"));
@@ -43,15 +51,18 @@ public class StageSelect {
 			}
 		}
 	}public void draw(SpriteBatch batch){
+		font.draw(batch, "STAGE SELECT", MainGame.width/2-100,MainGame.height-40);
 		for(Pair<Sprite,String> pair : stages){
 			pair.sprite.draw(batch);
 		}
 		ok.draw(batch);
+		selected.draw(batch);
 	}
 	public void input(Vector3 vec){
 		for(Pair<Sprite,String> pair : stages){
 			if(pair.sprite.getBoundingRectangle().contains(vec.x,vec.y)){
 				current = pair.string;
+				selected.setPosition(pair.sprite.getX(),pair.sprite.getY());
 				return;
 			}
 		}

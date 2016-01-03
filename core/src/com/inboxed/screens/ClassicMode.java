@@ -13,6 +13,7 @@ import com.inboxed.main.MainGame;
 import com.inboxed.stages.Forest;
 import com.inboxed.stages.Snowland;
 import com.inboxed.stages.Stage;
+import com.inboxed.characters.Character;
 
 
 public class ClassicMode implements Screen{
@@ -58,7 +59,7 @@ public class ClassicMode implements Screen{
         	round.addPlayer(name,i);
         	i++;
         }
-        
+        round.playersPlaying = playerNames.size;
         String[] names = {"Rocky","Chilly","Simirror","Wheelie"};
         hud = new ClassicHud(round.players,names);
         round.addHUD(hud);
@@ -131,7 +132,11 @@ public class ClassicMode implements Screen{
         	round.update();
             hud.update();
         }
-        
+        if(round.playersPlaying == 1){
+			for(Character chr : round.players){
+				if(!chr.lose) game.setScreen(new WinnerScreen(game,chr.name));
+			}
+		}
      
 	}
 

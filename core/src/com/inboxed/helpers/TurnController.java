@@ -1,7 +1,6 @@
 package com.inboxed.helpers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,10 +10,11 @@ import com.inboxed.blocks.Block;
 import com.inboxed.buttons.AbilityButton;
 import com.inboxed.buttons.DiceButton;
 import com.inboxed.buttons.EndButton;
+import com.inboxed.buttons.SurrenderButton;
+import com.inboxed.characters.Character;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
-import com.inboxed.characters.Character;
 
 public class TurnController {
 	
@@ -28,7 +28,7 @@ public class TurnController {
 	public DiceButton dice;
 	public AbilityButton abilityButton;
 	public EndButton endButton;
-	
+	public SurrenderButton surrenderButton;
 	//input
 	Vector3 vec;
 	public TurnController(Character chara){
@@ -40,6 +40,7 @@ public class TurnController {
 		dice = new DiceButton("dice");
 		abilityButton = new AbilityButton("power");
 		endButton = new EndButton("end");
+		surrenderButton = new SurrenderButton();
 		vec = new Vector3();
 				
 	}
@@ -52,33 +53,41 @@ public class TurnController {
 			possibleSprites.add(sprite);
 		}
 	}
-	public void input(OrthographicCamera cam){
+	public void input(){
 		if(current.moving) return;
 		if(current.doingAbility) return;
 		if (MyGestures.isTap()){
-			ClassicMode.cam2.unproject(MyGestures.touchPos);
-			if(dice.touched(MyGestures.touchPos)){ // ROLL THE DICE
+			vec.set(MyGestures.tapX,MyGestures.tapY,0);
+
+			ClassicMode.cam2.unproject(vec);
+			if(dice.touched(vec)){ // ROLL THE DICE
 				if(dice.rolled) return;
 				dice.roll();
 				current.changeMoves(dice.getValue());
 				return;
 			}
-			else if(abilityButton.touched(MyGestures.touchPos)){ // USE ABILITY
+			else if(abilityButton.touched(vec)){ // USE ABILITY
 				if(abilityButton.used || !current.canAbility()) return;
 				abilityButton.used = true;
 				current.startAbility();
 				return;
-			}else if(endButton.touched(MyGestures.touchPos)){ // END TURN
+			}
+			else if(endButton.touched(vec)){ // END TURN
 				if(current.moves != 0 || !dice.rolled) return;
 				finish = true;
 				return;
 			}
+			else if(surrenderButton.touched(vec)){
+				current.lose = true;
+				ClassicMode.round.playersPlaying--;
+				finish = true;
+				return;
+			}
 			vec.set(MyGestures.tapX,MyGestures.tapY,0);
-			cam.unproject(vec);
+			ClassicMode.cam.unproject(vec);
 			for(Pair<Block,String> pair : possibleMoves){
 				if(pair.getBlock().touched(vec)){
-					//System.out.println("aloalo");
-					current.changeDir(pair.getString());
+					current.changeDir(pair);
 				}
 			}
 		}
@@ -92,12 +101,15 @@ public class TurnController {
 			possibleMoves = current.getPossibleMoves();
 			if(possibleMoves.size == 0 && (abilityButton.used || !current.canAbility()) && current.moves != 0){ // END TURN AND LOSE
 				current.lose = true;
+				ClassicMode.round.playersPlaying--;
 				finish = true;
 				return;
 			}
 			else if(possibleMoves.size == 0 && current.status.contains("arrow")
 					&& (abilityButton.used || !current.canAbility()) && current.moves != 0){
 				current.lose = true;
+				ClassicMode.round.playersPlaying--;
+
 				finish = true;
 			}
 			setSprites();
@@ -122,5 +134,6 @@ public class TurnController {
 		if(current.moves == 0 && dice.rolled && current.canAbility()) endButton.draw(batch);
 		batch.draw(current.movesBg, MainGame.width/2-10,MainGame.height*4/5-10);
 		batch.draw(current.movesImage, MainGame.width/2,MainGame.height*4/5);
+		surrenderButton.draw(batch);
 	}
 }

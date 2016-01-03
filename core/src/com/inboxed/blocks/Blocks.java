@@ -1,18 +1,6 @@
 package com.inboxed.blocks;
 
 
-import java.util.Random;
-
-
-
-
-
-
-
-
-
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+
+import java.util.Random;
 
 
 public class Blocks {
@@ -110,8 +100,14 @@ public class Blocks {
 		}*/
 		moves = new Array<Block>();
 		blocks.clear();
+		loadFile(name);
+		touchPos = new Vector3();
+		possibles = new Array<Sprite>();
+	
+	}
+	public void loadFile(String name){
 		FileHandle file = Gdx.files.internal("archivos/"+name+".txt");
-		//FileHandle file = Gdx.files.internal("archivos/snowland.txt");
+		Random rand = new Random();
 		String text = file.readString();
 		int x=0,y=0;
 		for(String line : text.split("\n")){
@@ -141,10 +137,13 @@ public class Blocks {
 				else if(subline[4].equals("IC")){
 					blocks.add(new IceBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
-				else{
-					blocks.add(new NormalBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));					
+				else if(subline[4].equals("TE")){
+					blocks.add(new TeleportBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
-				
+				else{
+					blocks.add(new NormalBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));
+				}
+
 			}
 			else if(subline[0].equals("BG")){
 				x = Integer.parseInt(subline[1]);
@@ -152,9 +151,6 @@ public class Blocks {
 				background.add(new BackgroundBlock(x,y,1,subline[3],ClassicMode.images.getTexture(subline[4])));
 			}
 		}
-		touchPos = new Vector3();
-		possibles = new Array<Sprite>();
-	
 	}
 	public void draw(SpriteBatch batch){
 		for(Block block : background){

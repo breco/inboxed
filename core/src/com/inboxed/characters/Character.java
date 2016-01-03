@@ -2,8 +2,6 @@ package com.inboxed.characters;
 
 
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,9 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.IceBlock;
+import com.inboxed.blocks.TeleportBlock;
 import com.inboxed.helpers.Pair;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+
+import java.util.Random;
 
 public abstract class Character {
 	public int pos_x,pos_y;
@@ -58,7 +59,7 @@ public abstract class Character {
 		status = "";
 	}
 	public void update(){
-		//if(status.equals("tornado")) System.out.println("TORNADO");
+
 		if(moving) move();
 	}
 	public abstract void draw(SpriteBatch batch);
@@ -105,7 +106,19 @@ public abstract class Character {
 			if(possibleMoves.size == 0 && status.contains("frozen")){
 				status = "";
 			}
-			return possibleMoves;		
+			else{
+				return possibleMoves;
+			}
+		}
+		else if(status.equals("teleport")){
+			for(Block block : ClassicMode.stage.blocks.blocks){
+				if(block instanceof TeleportBlock && !block.equals(this) && block.points > 0 && !block.pressed){
+					possibleMoves.add(new Pair<Block,String>(block,"T"));
+				}
+			}
+			if(possibleMoves.size != 0) return possibleMoves;
+			status = "";
+
 		}
 		for(Block block : ClassicMode.stage.blocks.blocks){
 			if(block.points > 0 && !block.pressed){
@@ -125,7 +138,7 @@ public abstract class Character {
 		}
 		return possibleMoves;
 	}
-	public boolean useStatus(){
+	public boolean useStatus(Pair<Block,String> pair){
 		if(status.equals("tornado")){
 			Random rand = new Random();
 			Block temp;
@@ -155,21 +168,37 @@ public abstract class Character {
 			temp.discount();
 			return true;
 		}
+		else if(status.equals("teleport")){
+			Block temp = block;
+			block = pair.getBlock();
+			block.pressed = true;
+			temp.pressed = false;
+			this.moves--;
+			movesImage = new Texture((Gdx.files.internal("numbers/"+moves+".png")));
+			energyPoints++;
+			block.beforeAbility(this);
+			dir = " ";
+			pos_x = block.pos_x;
+			pos_y = block.pos_y;
+			sprite.setPosition(pos_x * MainGame.SPRITESIZE, pos_y * MainGame.SPRITESIZE);
+			temp.discount();
+			return true;
+
+		}
 		return false;
 	}
-	public void changeDir(String dir){
+	public void changeDir(Pair<Block,String> pair){
 		if(moves <= 0) return;
-		if(useStatus()) return;
+		if(useStatus(pair)) return;
 		System.out.println("this.dir="+this.dir+"_dir received="+dir+".");
-		if (this.dir != dir && !dir.equals(" ")){
-			this.dir = dir;
+		if (this.dir != pair.getString() && !pair.getString().equals(" ")){
+			this.dir = pair.getString();
 			moving = true;
-			System.out.println("alosolo");
 			if(status.contains("arrow"))status = "";
 			return;
 		}
 		moving = false;
-		//dirr = dir;
+
 	}
 	public void move(){
 		movTimer++;

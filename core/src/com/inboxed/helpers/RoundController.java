@@ -16,7 +16,7 @@ public class RoundController {
 	public TurnController turn;
 	public int turnNumber;
 	//TEST
-	
+	public int playersPlaying;
 	public ClassicHud hud;
 	public RoundController(){
 		players = new Array<Character>();
@@ -84,7 +84,7 @@ public class RoundController {
 			hud.startMoveCam();
 	}
 	public void input(OrthographicCamera cam){
-		turn.input(cam);
+		turn.input();
 	}
 	public void draw(SpriteBatch batch){
 		turn.draw(batch);

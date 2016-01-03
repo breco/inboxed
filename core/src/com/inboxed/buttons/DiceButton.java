@@ -1,12 +1,12 @@
 package com.inboxed.buttons;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+
+import java.util.Random;
 
 public class DiceButton {
 	public Texture image;
@@ -32,7 +32,7 @@ public class DiceButton {
 		if(rolled) cross.draw(batch);
 	}
 	public void update(){
-		
+
 	}
 	public void roll(){
 		value = rand.nextInt(6)+1;
@@ -40,7 +40,6 @@ public class DiceButton {
 		rolled = true;
 	}
 	public boolean touched(Vector3 touchPos){
-		
 		if(sprite.getBoundingRectangle().contains(touchPos.x,touchPos.y)){
 			return true;
 		}

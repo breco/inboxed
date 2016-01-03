@@ -81,18 +81,20 @@ public class CharacterSelect {
 		for(Pair<Sprite,String> pair : characters){
 			if(pair.sprite.getBoundingRectangle().contains(vec.x,vec.y)){
 				if(!playerNames.contains(pair.string,false)){
+					if(players == 0) break;
 					playerNames.add(pair.string);
 					players--;
-
-					playerDone.get(playerNum).setPosition(pair.sprite.getX(),pair.sprite.getY());
+					playerDone.get(playerNum).setPosition(pair.sprite.getX(),pair.sprite.getY()-MainGame.SPRITESIZE/2);
 
 					playerNum++;
-					if(players == 0){
-						showing = false;
-						ClassicSetup.stageSelect.showing = true;
-					}
 				}
 				
+			}
+		}
+		if(ok.getBoundingRectangle().contains(vec.x,vec.y)){
+			if(players == 0) {
+				showing = false;
+				ClassicSetup.stageSelect.showing = true;
 			}
 		}
 	}
