@@ -20,15 +20,6 @@ public class TeleportBlock extends Block {
         pointSprite.setBounds(x* MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
         icon.setBounds(x*MainGame.SPRITESIZE+7,y*MainGame.SPRITESIZE+10, 50, 50);
     }
-    public TeleportBlock(int x, int y, int points, String name) {
-        super(x, y, points, name);
-        icon = new Sprite(new Texture("blocks/teleportBlock.png"));
-        pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
-        pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-        icon.setBounds(x*MainGame.SPRITESIZE+7,y*MainGame.SPRITESIZE+10, 50, 50);
-
-    }
-
 
     public void update() {
 

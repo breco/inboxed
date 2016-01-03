@@ -107,6 +107,7 @@ public class Blocks {
 	}
 	public void loadFile(String name){
 		FileHandle file = Gdx.files.internal("archivos/"+name+".txt");
+		if(!file.exists()) System.out.println("no existe");
 		Random rand = new Random();
 		String text = file.readString();
 		int x=0,y=0;
