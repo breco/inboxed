@@ -111,6 +111,8 @@ public class Blocks {
 		Random rand = new Random();
 		String text = file.readString();
 		int x=0,y=0;
+		System.out.println("lineas");
+		System.out.println(text.split("\n").length);
 		for(String line : text.split("\n")){
 			String[] subline = line.split(",");
 			if(subline[0].equals("B")){
