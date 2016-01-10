@@ -37,16 +37,37 @@ public class RoundController {
 	public void addPlayer(String name, int number){
 		int x = 0, y = 0;
 		if(number == 1){
-			x = 0;
-			y = 10;
+			if(ClassicMode.stage.name.equals("clouds")){
+				x = 0;
+				y = 13;
+			}
+			else{
+				x = 0;
+				y = 10;
+			}
+
 		}
 		else if(number == 2){
-			x = 10;
-			y = 10;
+			if(ClassicMode.stage.name.equals("clouds")){
+				x = 12;
+				y = 13;
+			}
+			else{
+				x = 10;
+				y = 10;
+			}
+
 		}
 		else if(number == 3){
-			x = 10;
-			y = 0;
+			if(ClassicMode.stage.name.equals("clouds")){
+				x = 12;
+				y = 0;
+			}
+			else{
+				x = 10;
+				y = 0;
+			}
+
 		}
 		if(name.equals("rocky")){
 			players.add(new Rocky(x,y,"rocky"));

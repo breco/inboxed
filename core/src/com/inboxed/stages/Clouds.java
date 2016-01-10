@@ -1,36 +1,34 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
-import com.inboxed.blocks.Block;
-import com.inboxed.blocks.MovingBlock;
 import com.inboxed.screens.ClassicMode;
-
-import java.util.Random;
 
 public class Clouds extends Stage{
 
-    public Random rand;
-    public Array<Block> movingBlocks;
-    public Clouds(String name) {
-        super(name);
-        rand = new Random();
-        movingBlocks = new Array<Block>();
-        for(Block block : blocks.blocks){
-            if(block.pos_x == 1 && block.pos_y == 2){
-                movingBlocks.add(block);
-            }
-        }
 
+    public Sprite bg,bg2;
+
+    public Clouds(String name) {
+        //			if(ClassicMode.cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
+
+        super(name);
+        bg = new Sprite(new Texture(Gdx.files.internal("backgrounds/clouds.png")));
+        bg2 = new Sprite(new Texture(Gdx.files.internal("backgrounds/clouds.png")));
+        bg.setPosition(-300,-100);
+        bg.setScale(2);
+        bg2.setPosition(-300,1100);
+        bg2.setScale(2);
 
     }
     public void effect(){
-        System.out.println("EFFEEEEEEECT MIERDDAAAA");
-        for(Block block : blocks.blocks){
+        /*for(Block block : blocks.blocks){
             if(block instanceof MovingBlock){
                 ((MovingBlock)(block)).changePosition();
             }
-        }
+        }*/
     }
 
     public void update() {
@@ -39,6 +37,8 @@ public class Clouds extends Stage{
     }
 
     public void draw(SpriteBatch batch) {
+        bg.draw(batch);
+        bg2.draw(batch);
         blocks.draw(batch);
 
     }

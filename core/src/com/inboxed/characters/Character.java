@@ -83,7 +83,7 @@ public abstract class Character {
 	public Array<Pair<Block, String>> getPossibleMoves(){
 		possibleMoves.clear();
 		if(status.equals("tornado")){ // TORNADO STATUS
-			possibleMoves.add(new Pair<Block,String>(block,"S"));
+			possibleMoves.add(new Pair<Block,String>(block,"TO"));
 			return possibleMoves;
 		}
 		else if(status.contains("arrow") || status.contains("frozen")){ //ARROW AND FROZEN STATUS
@@ -123,7 +123,8 @@ public abstract class Character {
 		for(Block block : ClassicMode.stage.blocks.blocks){
 			if(block.points > 0 && !block.pressed){
 				if(block.pos_x == pos_x - 1 && block.pos_y == pos_y){ //LEFT
-					possibleMoves.add(new Pair<Block,String>(block,"L"));
+					possibleMoves.add(new Pair<Block, String>(block, "L"));
+
 				}
 				else if(block.pos_x == pos_x + 1 && block.pos_y == pos_y){ //RIGHT
 					possibleMoves.add(new Pair<Block,String>(block,"R"));
@@ -161,10 +162,11 @@ public abstract class Character {
 			energyPoints++;
 			status = "";
 			block.beforeAbility(this);
-			dir = " ";
 			pos_x = block.pos_x;
 			pos_y = block.pos_y;
-			sprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+
+			dir = "TO";
+			moving = true;
 			temp.discount();
 			return true;
 		}
@@ -202,6 +204,34 @@ public abstract class Character {
 	}
 	public void move(){
 		movTimer++;
+		if(dir.equals("TO")){ // TORNADO MOVEMENT
+
+			if(sprite.getX() < block.sprite.getX()){
+				sprite.setPosition(sprite.getX() + MOV, sprite.getY());
+				ClassicMode.cam.translate(MOV,0);
+			}
+			else if(sprite.getX() > block.sprite.getX()){
+				ClassicMode.cam.translate(-MOV,0);
+				sprite.setPosition(sprite.getX() - MOV, sprite.getY());
+
+			}
+			if(sprite.getY() < block.sprite.getY()){
+				sprite.setPosition(sprite.getX(), sprite.getY() + MOV);
+				ClassicMode.cam.translate(0,MOV);
+			}
+			else if(sprite.getY() > block.sprite.getY()){
+				sprite.setPosition(sprite.getX(), sprite.getY() - MOV);
+				ClassicMode.cam.translate(0,-MOV);
+			}
+			sprite.rotate(20);
+			if(sprite.getX() == block.sprite.getX() && sprite.getY() == block.sprite.getY() && movTimer % 18 == 0){
+				moving = false;
+				dir = " ";
+				movTimer = 0;
+			}
+			return;
+		}
+		//NORMAL MOVEMENT
 		if (dir.equals("R")){
 			sprite.setPosition(sprite.getX()+MOV,sprite.getY());
 		}
@@ -229,7 +259,7 @@ public abstract class Character {
 			temp.pressed = false;
 			dir = " ";
 			moves--;
-			if(moves == 0 && status.contains("frozen") && !(block instanceof IceBlock)) status = ""; 
+			if(status.contains("frozen") && !(block instanceof IceBlock)) status = "";
 			movesImage = new Texture(Gdx.files.internal("numbers/"+moves+".png"));
 			energyPoints++;
 		}

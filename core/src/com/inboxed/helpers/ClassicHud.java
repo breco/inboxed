@@ -83,7 +83,7 @@ public class ClassicHud {
 	}
 	public void moveCam(OrthographicCamera cam){
 		boolean stopX = false, stopY = false;
-		//if(current.sprite.getX() > next.sprite.getX()){ //mover camara hacia izq
+
 		if(ClassicMode.cam.position.x > next.sprite.getX()){ //mover camara hacia izq
 			if(cam.position.x <= next.sprite.getX()+MainGame.SPRITESIZE/2) stopX = true;
 			else cam.translate(-camSpeed,0);

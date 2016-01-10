@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.characters.Character;
-import com.inboxed.characters.Chilly;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
 
@@ -58,7 +57,7 @@ public class IceBlock extends Block{
 		points-=1;
 		if (points <= 0){
 			pointSprite = new Sprite(ClassicMode.images.blocked);
-			sprite.setTexture(ClassicMode.images.getTexture("C0"));
+			//sprite.setTexture(ClassicMode.images.getTexture("C0"));
 		}
 		else{
 			pointSprite = new Sprite(ClassicMode.images.normalPoints.get(points-1));;
@@ -69,7 +68,7 @@ public class IceBlock extends Block{
 
 	@Override
 	public void beforeAbility(Character chr) {
-		if(chr instanceof Chilly) return;
+		//if(chr instanceof Chilly) return;
 		chr.status = "frozen"+chr.dir;
 		System.out.println("FREEZIIIINNNNGGGG");
 		

@@ -63,6 +63,9 @@ public class ImageController {
 		else if(code.equals("C0")) return center;
 		else if(code.equals("C1")) return center1;
 		else if(code.equals("C2")) return center2;
+		else if(code.equals("C3")) return center3;
+		else if(code.equals("C4")) return center4;
+		else if(code.equals("C5")) return center5;
 		else if(code.equals("BC0")) return borderC;
 		else if(code.equals("BC1")) return borderC1;
 		else if(code.equals("BC2")) return borderC2;

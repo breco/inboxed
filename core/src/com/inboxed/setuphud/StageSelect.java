@@ -42,6 +42,8 @@ public class StageSelect {
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/forest/blocked.png"))),"forest"));
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/snowland/blocked.png"))),"snowland"));
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/clouds/blocked.png"))),"clouds"));
+        stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/iceBlock.png"))),"iceRink"));
+
 		int x = 0,y = 0;
 		for(Pair<Sprite,String> pair : stages){
 			pair.sprite.setBounds(200+150*x,300-y*150,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
@@ -68,7 +70,7 @@ public class StageSelect {
 			}
 		}
 		if(ok.getBoundingRectangle().contains(vec.x,vec.y)){
-			showing = false;
+			if(!current.equals(""))showing = false;
 		}
 	}
 }

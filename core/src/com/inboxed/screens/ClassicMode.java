@@ -13,6 +13,7 @@ import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
 import com.inboxed.stages.Clouds;
 import com.inboxed.stages.Forest;
+import com.inboxed.stages.IceRink;
 import com.inboxed.stages.Snowland;
 import com.inboxed.stages.Stage;
 
@@ -32,14 +33,18 @@ public class ClassicMode implements Screen{
 	//public int PANLIMITL = -2, PANLIMITR = 446; 
 	//public int PANLIMITU = 446, PANLIMITD = 30;
 	//CAMERA PAN LIMITS FOR A 11x11
-	public int PANLIMITL = -2, PANLIMITR = 650; 
-	public int PANLIMITU = 650, PANLIMITD = 30;
+	//public int PANLIMITL = -2, PANLIMITR = 650;
+	//public int PANLIMITU = 650, PANLIMITD = 30;
+	public int PANLIMITL = -2, PANLIMITR = 850;
+	public int PANLIMITU = 900, PANLIMITD = 30;
 	public float x,y;
 
 	public Stage getStage(String name){
 		if(name.equals("forest")) return new Forest(name);
 		if(name.equals("snowland")) return new Snowland(name);
 		if(name.equals("clouds")) return new Clouds(name);
+		if(name.equals("iceRink")) return new IceRink(name);
+
 		else return null;
 	}
 	public ClassicMode(final MainGame game,Array<String> playerNames, String stageName) {
@@ -100,7 +105,7 @@ public class ClassicMode implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
      // 2)Input handling
-        if(!hud.movingCam){
+        if(!hud.movingCam && !(hud.current.moving && hud.current.dir.equals("TO"))){
         	input();
         	stage.input();
         	if(stage.blocks.special == null){

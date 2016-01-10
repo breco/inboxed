@@ -99,6 +99,7 @@ public class TurnController {
 		}
 		if(current.dir.equals(" ")){
 			possibleMoves = current.getPossibleMoves();
+			if(current.moving) return;
 			if(possibleMoves.size == 0 && (abilityButton.used || !current.canAbility()) && current.moves != 0){ // END TURN AND LOSE
 				current.lose = true;
 				ClassicMode.round.playersPlaying--;
@@ -116,8 +117,7 @@ public class TurnController {
 		}
 		if(current.moving) possibleSprites.clear();
 		dice.update();
-		if(dice.rolled && current.moves == 0 && (abilityButton.used || !current.canAbility())){
-			System.out.println("end turn 1");
+		if(dice.rolled && current.moves == 0 && (abilityButton.used || !current.canAbility() && !current.moving)){
 			finish = true; // END TURN
 		}
 	}
