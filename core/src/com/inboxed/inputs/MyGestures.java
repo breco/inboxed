@@ -15,6 +15,7 @@ public class MyGestures implements GestureListener {
     public static float panX,panY;
     public static boolean zoom = false, zoomOut = false, zoomMoving = false;
     public static float zoomInit, zoomFin;
+    public static float longPX, longPY;
     public static boolean longPress;
     
     public static Vector3 touchPos;
@@ -92,6 +93,8 @@ public class MyGestures implements GestureListener {
     public boolean longPress(float x, float y) {
         message = "Long press performed";
         longPress = true;
+        longPX = x;
+        longPY = y;
         return true;
     }
     

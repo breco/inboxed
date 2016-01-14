@@ -70,6 +70,7 @@ public class TurnController {
 				if(abilityButton.used || !current.canAbility()) return;
 				abilityButton.used = true;
 				current.startAbility();
+				ClassicMode.stage.blocks.touched = null;
 				return;
 			}
 			else if(endButton.touched(vec)){ // END TURN
@@ -77,7 +78,7 @@ public class TurnController {
 				finish = true;
 				return;
 			}
-			else if(surrenderButton.touched(vec)){
+			else if(surrenderButton.touched(vec)){ // SURRENDER
 				current.lose = true;
 				ClassicMode.round.playersPlaying--;
 				finish = true;
@@ -124,9 +125,11 @@ public class TurnController {
 	public void draw(SpriteBatch batch){
 		if(current.moves == 0) return;
 		if(current.doingAbility) return;
+
 		for(Sprite sprite : possibleSprites){
 			sprite.draw(batch);
 		}
+
 	}
 	public void drawHUD(SpriteBatch batch){
 		dice.draw(batch);

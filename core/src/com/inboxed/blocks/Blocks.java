@@ -19,7 +19,7 @@ public class Blocks {
 	public Array<Block> blocks;
 	public Array<Block> moves;
 	public Array<Block> background;
-	public Block special,touched;
+	public Block special,touched,longTouched;
 	public Vector3 touchPos;
 	public Array<Sprite> possibles;
 	public int FRUNTUM = 40;
@@ -194,6 +194,18 @@ public class Blocks {
 				if(block.touched(touchPos)){
 					touched = block;
 					System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
+					break;
+				}
+			}
+		}
+		else if(MyGestures.isLongPress()){
+			touchPos.set(MyGestures.longPX,MyGestures.longPY,0);
+			cam.unproject(touchPos);
+			for(Block block : blocks){
+				if(block.touched(touchPos)){
+					longTouched = block;
+					System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
+					break;
 				}
 			}
 		}
