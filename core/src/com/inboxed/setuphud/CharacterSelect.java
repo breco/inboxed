@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.main.MainGame;
@@ -29,7 +28,7 @@ public class CharacterSelect {
 	public Array<String> playerNames;
 	public int players;
 	public boolean showing;
-	public ShaderProgram shader;
+	
 	public BitmapFont font;
 	public Array<Sprite> playerDone;
 	public int playerNum;

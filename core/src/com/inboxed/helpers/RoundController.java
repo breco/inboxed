@@ -8,6 +8,7 @@ import com.inboxed.characters.Chilly;
 import com.inboxed.characters.Rocky;
 import com.inboxed.characters.Simirror;
 import com.inboxed.characters.Tac;
+import com.inboxed.characters.Wheelie;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.screens.ClassicMode;
 
@@ -96,6 +97,9 @@ public class RoundController {
         else if(name.equals("tac")){
             players.add(new Tac(x,y,"tac"));
         }
+		else if(name.equals("wheelie")){
+			players.add(new Wheelie(x,y,"wheelie"));
+		}
 		else{
 			players.add(new Rocky(x,y,name));
 		}
