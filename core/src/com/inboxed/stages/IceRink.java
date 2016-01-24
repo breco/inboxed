@@ -11,12 +11,17 @@ public class IceRink extends Stage{
 
     public Random rand;
     private Block delete;
-    private int changes = 15;
+    private int changes;
     public IceRink(String name) {
         super(name);
         rand = new Random();
         int r;
-        System.out.println("doing effect");
+        if(blocks.size.equals("small")){
+            changes = 6;
+        }
+        else if(blocks.size.equals("big")){
+            changes = 15;
+        }
         for(int i = 1;i<=changes;i++){
             r = rand.nextInt(blocks.blocks.size);
             while(blocks.blocks.get(r).pressed || !(blocks.blocks.get(r) instanceof IceBlock || blocks.blocks.get(r).points <= 0)){

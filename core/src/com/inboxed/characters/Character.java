@@ -103,7 +103,7 @@ public abstract class Character {
 					}
 				}
 			}
-			if(possibleMoves.size == 0 && status.contains("frozen")){
+			if(possibleMoves.size == 0 && (status.contains("frozen") || (status.contains("arrow")))){
 				status = "";
 			}
 			else{

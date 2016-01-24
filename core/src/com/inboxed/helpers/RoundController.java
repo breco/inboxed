@@ -50,37 +50,77 @@ public class RoundController {
 	public void addHUD(ClassicHud hud){
 		this.hud = hud;
 	}
-	public void addPlayer(String name, int number){
+	public void addPlayer(String name, int number,String size){
 		int x = 0, y = 0;
+		if(number == 0){
+			x = 0;
+			y = 0;
+		}
 		if(number == 1){
-			if(ClassicMode.stage.name.equals("clouds")){
+			if(size.equals("bigclouds")){
 				x = 0;
 				y = 13;
 			}
-			else{
+			else if(size.equals("smallclouds")){
+				x = 0;
+				y = 12;
+			}
+			else if(size.equals("small")){
+				x = 6;
+				y = 0;
+			}
+			else if(size.equals("big")){
 				x = 0;
 				y = 10;
+			}
+			else if(size.equals("city")){
+				x = 0;
+				y = 8;
 			}
 
 		}
 		else if(number == 2){
-			if(ClassicMode.stage.name.equals("clouds")){
+			if(size.equals("bigclouds")){
 				x = 12;
 				y = 13;
 			}
-			else{
+			else if(size.equals("smallclouds")){
+				x = 12;
+				y = 12;
+			}
+			else if(size.equals("small")){
+				x = 6;
+				y = 6;
+			}
+			else if(size.equals("big")){
 				x = 10;
 				y = 10;
+			}
+			else if(size.equals("city")){
+				x = 8;
+				y = 8;
 			}
 
 		}
 		else if(number == 3){
-			if(ClassicMode.stage.name.equals("clouds")){
+			if(size.equals("bigclouds")){
 				x = 12;
 				y = 0;
 			}
-			else{
+			else if(size.equals("smallclouds")){
+				x = 12;
+				y = 0;
+			}
+			else if(size.equals("small")){
+				x = 0;
+				y = 6;
+			}
+			else if(size.equals("big")){
 				x = 10;
+				y = 0;
+			}
+			else if(size.equals("city")){
+				x = 8;
 				y = 0;
 			}
 

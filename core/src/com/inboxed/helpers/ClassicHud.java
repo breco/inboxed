@@ -14,11 +14,11 @@ public class ClassicHud {
 	public int camSpeed;
 	public Character current, next;
 	//TEST
-	public ClassicHud(Array<Character> players, String[] names){
+	public ClassicHud(Array<Character> players){
 		this.players = new Array<PlayerInfo>();
 		int place = 1;
 		for(Character chr : players){
-			this.players.add(new PlayerInfo(chr,names[place-1],place));
+			this.players.add(new PlayerInfo(chr,"name",place));
 			place++;
 		}
 		turnNumber= 1;

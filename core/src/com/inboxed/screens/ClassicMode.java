@@ -11,6 +11,7 @@ import com.inboxed.helpers.ImageController;
 import com.inboxed.helpers.RoundController;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
+import com.inboxed.stages.BigCity;
 import com.inboxed.stages.Clouds;
 import com.inboxed.stages.Forest;
 import com.inboxed.stages.IceRink;
@@ -29,14 +30,11 @@ public class ClassicMode implements Screen{
 	public ClassicHud hud;
 	public static ImageController images;
 	public static Stage stage;
-	//CAMERA PAN LIMITS FOR A 7x7 BOARD
-	//public int PANLIMITL = -2, PANLIMITR = 446; 
-	//public int PANLIMITU = 446, PANLIMITD = 30;
 	//CAMERA PAN LIMITS FOR A 11x11
 	//public int PANLIMITL = -2, PANLIMITR = 650;
 	//public int PANLIMITU = 650, PANLIMITD = 30;
-	public int PANLIMITL = -2, PANLIMITR = 850;
-	public int PANLIMITU = 900, PANLIMITD = 30;
+	public int PANLIMITL = -2, PANLIMITR = 850; // cloud stage
+	public int PANLIMITU = 900, PANLIMITD = 30; // cloud stage
 	public float x,y;
 
 	public Stage getStage(String name){
@@ -44,6 +42,7 @@ public class ClassicMode implements Screen{
 		if(name.equals("snowland")) return new Snowland(name);
 		if(name.equals("clouds")) return new Clouds(name);
 		if(name.equals("iceRink")) return new IceRink(name);
+        if(name.equals("bigCity")) return new BigCity(name);
 
 		else return null;
 	}
@@ -59,16 +58,16 @@ public class ClassicMode implements Screen{
         images = new ImageController(stageName);
 
         stage = getStage(stageName);
-        
+        stage.setBounds(this);
         round = new RoundController();
         int i = 0;
+		playerNames.shuffle();
         for(String name : playerNames){
-        	round.addPlayer(name,i);
+        	round.addPlayer(name,i,stage.blocks.size);
         	i++;
         }
         round.playersPlaying = playerNames.size;
-        String[] names = {"Rocky","Chilly","Simirror","Wheelie"};
-        hud = new ClassicHud(round.players,names);
+        hud = new ClassicHud(round.players);
         round.addHUD(hud);
         round.setTurn(false);
         hud.setCam(cam);
@@ -86,13 +85,13 @@ public class ClassicMode implements Screen{
 				y = 0;
 			}
 			cam.translate(x,y);
-			//System.out.println(cam.position.x+","+cam.position.y);
+
     	
 	    }
-	    /*if(MyGestures.isZoom()){
-	    	if(MyGestures.zoomOut) cam.zoom += 0.01;
-	    	else cam.zoom -= 0.01;
-	    }*/
+	    if(MyGestures.isZoom()){
+	    	if(MyGestures.zoomOut) cam.zoom += 0.005;
+	    	else cam.zoom -= 0.005;
+	    }
 	    
 	}
 	

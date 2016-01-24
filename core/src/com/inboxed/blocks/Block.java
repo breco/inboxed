@@ -62,4 +62,8 @@ public abstract class Block {
 		}
 		return false;
 	}
+	public void restore(int points){
+        this.points = points;
+        pointSprite.setTexture(ClassicMode.images.specialPoints.get(points-1));
+    }
 }

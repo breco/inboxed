@@ -28,7 +28,7 @@ public class CharacterSelect {
 	public Array<String> playerNames;
 	public int players;
 	public boolean showing;
-	
+
 	public BitmapFont font;
 	public Array<Sprite> playerDone;
 	public int playerNum;

@@ -1,22 +1,29 @@
 package com.inboxed.stages;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
 
+import java.util.Random;
+
 public class Forest extends Stage{
 	
-	public Random rand;
+	private Random rand;
+	private int spawn;
 	public Forest(String name) {
 		super(name);
 		rand = new Random();
+		if(blocks.size.equals("small")){
+			spawn = 1;
+		}
+		else if(blocks.size.equals("big")){
+			spawn = 4;
+		}
 	}
 	public void effect(){
 		int r;
-		for(int i = 1;i<=4;i++){
+		for(int i = 1;i<=spawn;i++){
 			r = rand.nextInt(blocks.blocks.size);
 			while(blocks.blocks.get(r).pressed || blocks.blocks.get(r).points <= 0){
 				r = rand.nextInt(blocks.blocks.size);
@@ -24,7 +31,7 @@ public class Forest extends Stage{
 			blocks.blocks.get(r).points = 0;
 			blocks.blocks.get(r).pointSprite = new Sprite(ClassicMode.images.blocked);
 			blocks.blocks.get(r).pointSprite.setBounds(blocks.blocks.get(r).pos_x*MainGame.SPRITESIZE, blocks.blocks.get(r).pos_y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-			System.out.println("STAGE EFFECT!");
+
 		}
 	}
 	

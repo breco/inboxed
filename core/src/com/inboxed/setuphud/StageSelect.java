@@ -43,6 +43,7 @@ public class StageSelect {
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/snowland/blocked.png"))),"snowland"));
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/clouds/blocked.png"))),"clouds"));
         stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/iceBlock.png"))),"iceRink"));
+		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/bigCity/blocked.png"))),"bigCity"));
 
 		int x = 0,y = 0;
 		for(Pair<Sprite,String> pair : stages){

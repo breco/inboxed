@@ -35,7 +35,7 @@ public class PlayerNumber {
 		left.setBounds(MainGame.width/2 - MainGame.SPRITESIZE*3,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 		right.setBounds(MainGame.width/2 + MainGame.SPRITESIZE*3,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 		ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-		current = 0;
+		current = 1;
 	}
 	public void draw(SpriteBatch batch){
 		numbers.get(current).draw(batch);
@@ -47,7 +47,7 @@ public class PlayerNumber {
 	public void input(Vector3 vec){
 		if(left.getBoundingRectangle().contains(vec.x,vec.y)){
 			current--;
-			if(current < 0) current = 0;
+			if(current < 1) current = 1;
 		}
 		else if(right.getBoundingRectangle().contains(vec.x,vec.y)){
 			current++;

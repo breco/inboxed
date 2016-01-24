@@ -128,6 +128,7 @@ public class Wheelie extends Character{
     public boolean canAbility() {
         if(energyPoints < abilityCost) return false;
         if(!areNearbyBlocks()) return false;
+        if(moves <= 0) return false;
         return true;
     }
 

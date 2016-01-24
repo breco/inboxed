@@ -68,4 +68,11 @@ public class ArrowBlock extends Block{
 		
 	}
 
+	public void changeDir(String dir){
+        System.out.println("changing dir");
+        if(this.dir.equals(dir)) return;
+        this.dir = dir;
+        icon = new Sprite(new Texture("blocks/arrowBlock"+dir+".png"));
+        icon.setBounds(pos_x*MainGame.SPRITESIZE+7,pos_y*MainGame.SPRITESIZE+10, 50, 50);
+    }
 }
