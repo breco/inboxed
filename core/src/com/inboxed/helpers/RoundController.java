@@ -23,8 +23,10 @@ public class RoundController {
     //TEST
     private boolean drawTouched;
     private int dt_timer,MAX_DT_TIMER;
+	public Array<Integer> positions;
 	public RoundController(){
 		players = new Array<Character>();
+        positions = new Array<Integer>();
 		roundNumber = 1;
 		turnNumber =1;
         drawTouched = false;
@@ -51,80 +53,8 @@ public class RoundController {
 		this.hud = hud;
 	}
 	public void addPlayer(String name, int number,String size){
-		int x = 0, y = 0;
-		if(number == 0){
-			x = 0;
-			y = 0;
-		}
-		if(number == 1){
-			if(size.equals("bigclouds")){
-				x = 0;
-				y = 13;
-			}
-			else if(size.equals("smallclouds")){
-				x = 0;
-				y = 12;
-			}
-			else if(size.equals("small")){
-				x = 6;
-				y = 0;
-			}
-			else if(size.equals("big")){
-				x = 0;
-				y = 10;
-			}
-			else if(size.equals("city")){
-				x = 0;
-				y = 8;
-			}
-
-		}
-		else if(number == 2){
-			if(size.equals("bigclouds")){
-				x = 12;
-				y = 13;
-			}
-			else if(size.equals("smallclouds")){
-				x = 12;
-				y = 12;
-			}
-			else if(size.equals("small")){
-				x = 6;
-				y = 6;
-			}
-			else if(size.equals("big")){
-				x = 10;
-				y = 10;
-			}
-			else if(size.equals("city")){
-				x = 8;
-				y = 8;
-			}
-
-		}
-		else if(number == 3){
-			if(size.equals("bigclouds")){
-				x = 12;
-				y = 0;
-			}
-			else if(size.equals("smallclouds")){
-				x = 12;
-				y = 0;
-			}
-			else if(size.equals("small")){
-				x = 0;
-				y = 6;
-			}
-			else if(size.equals("big")){
-				x = 10;
-				y = 0;
-			}
-			else if(size.equals("city")){
-				x = 8;
-				y = 0;
-			}
-
-		}
+        int x = positions.get(number*2);
+        int y = positions.get(number*2+1);
 		if(name.equals("rocky")){
 			players.add(new Rocky(x,y,"rocky"));
 		}
@@ -149,6 +79,7 @@ public class RoundController {
 		if(turnNumber > players.size){
 			turnNumber =1;
 			roundNumber++;
+            System.out.println("ROUND "+roundNumber);
 			ClassicMode.stage.effect();
 		}
 		setTurn(true);
@@ -161,6 +92,7 @@ public class RoundController {
 			if(turnNumber > players.size){
 				turnNumber = 1;
 				roundNumber++;
+				System.out.println("ROUND "+roundNumber);
 				ClassicMode.stage.effect();
 			}
 			turn = new TurnController(players.get(turnNumber-1));
@@ -189,7 +121,7 @@ public class RoundController {
 		}
 
         if(drawTouched && ClassicMode.stage.blocks.longTouched.pos_x == turn.current.block.pos_x && ClassicMode.stage.blocks.longTouched.pos_y == turn.current.block.pos_y){
-            System.out.println("DRAWINGINGI");
+
             turn.current.block.draw(batch);
         }
 

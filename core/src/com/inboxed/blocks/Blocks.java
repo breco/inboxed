@@ -50,7 +50,13 @@ public class Blocks {
 		for(String line : text.split("\n")){
 			String[] subline = line.split(",");
             if(subline[0].equals("SE")){
+                String[] position;
                 size = subline[1];
+                for(int i = 2;i < subline.length;i++){
+					position = subline[i].split("-");
+                    ClassicMode.round.positions.add(Integer.parseInt(position[0]));
+                    ClassicMode.round.positions.add(Integer.parseInt(position[1]));
+				}
             }
 			else if(subline[0].equals("B")){
 				System.out.println(line);
@@ -59,13 +65,16 @@ public class Blocks {
 					y = Integer.parseInt(subline[2]);
 				}
 
-				if(subline[4].equals("LI")){
+				if(subline[4].equals("LI")){ //lightning block
 					blocks.add(new LightningBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
-				else if(subline[4].equals("TO")){
+				else if(subline[4].equals("MLI")){ //Mega lightning block
+					blocks.add(new MegaLightningBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
+				}
+				else if(subline[4].equals("TO")){ //Tornado Block
 					blocks.add(new TornadoBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
-				else if(subline[4].equals("ARU")){
+				else if(subline[4].equals("ARU")){ //
 					blocks.add(new ArrowBlock(x,y,rand.nextInt(6)+1,"U","forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("ARD")){
@@ -128,7 +137,7 @@ public class Blocks {
 			for(Block block : blocks){
 				if(block.touched(touchPos)){
 					touched = block;
-					System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
+					//System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
 					break;
 				}
 			}
@@ -139,7 +148,7 @@ public class Blocks {
 			for(Block block : blocks){
 				if(block.touched(touchPos)){
 					longTouched = block;
-					System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
+					//System.out.println(block.pos_x+","+block.pos_y+", pressed? "+block.pressed+" points: "+block.points);
 					break;
 				}
 			}

@@ -1,8 +1,6 @@
 package com.inboxed.blocks;
 
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -10,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+
+import java.util.Random;
 
 public class NormalBlock extends Block {
 	public NormalBlock(int x, int y, int points, String name, Texture image) {
@@ -25,7 +25,7 @@ public class NormalBlock extends Block {
 			image = new Texture(Gdx.files.internal("blocks/"+name+r+".png"));
 		}
 		sprite = new Sprite(image);
-		sprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
+		sprite.setBounds(x * MainGame.SPRITESIZE, y * MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
 		
 	}
 	
@@ -62,5 +62,10 @@ public class NormalBlock extends Block {
 	public void beforeAbility(Character chr) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void restore(int points){
+		this.points = points;
+		if(points > 0) pointSprite.setTexture(ClassicMode.images.normalPoints.get(points-1));
+		else pointSprite.setTexture(ClassicMode.images.blocked);
 	}
 }

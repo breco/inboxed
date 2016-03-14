@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
@@ -18,7 +16,6 @@ public class ClassicSetup implements Screen {
 
 	public MainGame game;
 	public static OrthographicCamera cam;
-	public Sprite forest,snowland;
 	public Vector3 vec;
 	public String stage;
 	//
@@ -31,10 +28,6 @@ public class ClassicSetup implements Screen {
 		cam = new OrthographicCamera();
 		vec = new Vector3();
         cam.setToOrtho(false, MainGame.width, MainGame.height);
-        forest = new Sprite(new Texture(Gdx.files.internal("blocks/forest/blocked.png")));
-        snowland = new Sprite(new Texture(Gdx.files.internal("blocks/snowland/blocked.png")));
-        forest.setBounds(100, 200, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-        snowland.setBounds(100, 100, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
         stage = "";
         //
         playerNumber = new PlayerNumber();

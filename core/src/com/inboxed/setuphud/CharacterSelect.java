@@ -58,7 +58,7 @@ public class CharacterSelect {
 		characters.add(new Pair<Sprite, String>(new Sprite(new Texture(Gdx.files.internal("characters/wheelie.png"))),"wheelie"));
 		int x = 0,y = 0;
 		for(Pair<Sprite,String> pair : characters){
-			pair.sprite.setBounds(200+150*x,300-y*150,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
+			pair.sprite.setBounds(50+150*x,300-y*150,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 			x++;
 			if(x > 3){
 				x = 0;

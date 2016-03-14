@@ -50,7 +50,7 @@ public class LightningBlock extends Block{
 		
 	}
 
-	public Block getBlock(int x, int y){
+	/*public Block getBlock(int x, int y){
 		for(Block block : ClassicMode.stage.blocks.blocks){
 			if(block.pos_x == x && block.pos_y == y){
 				if(!block.pressed && block.points > 0){
@@ -59,7 +59,7 @@ public class LightningBlock extends Block{
 			}
 		}
 		return null;
-	}
+	}*/
 	public void startAbility(){
 		Sprite sprite;
 		for(Block block : ClassicMode.stage.blocks.blocks){
@@ -102,5 +102,12 @@ public class LightningBlock extends Block{
 	}
 	public void beforeAbility(Character chr){
 		
+	}
+	public void changePosition(int x, int y){
+		pos_x = x;
+		pos_y = y;
+		sprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+		pointSprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+		icon.setBounds(x * MainGame.SPRITESIZE + 7, y * MainGame.SPRITESIZE + 10, 50, 50);
 	}
 }

@@ -60,4 +60,11 @@ public class TeleportBlock extends Block {
         }
         chr.status = "teleport";
     }
+    public void changePosition(int x, int y){
+        pos_x = x;
+        pos_y = y;
+        sprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+        pointSprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+        icon.setBounds(pos_x * MainGame.SPRITESIZE + 7, pos_y * MainGame.SPRITESIZE + 10, 50, 50);
+    }
 }

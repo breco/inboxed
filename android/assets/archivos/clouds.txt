@@ -1,4 +1,4 @@
-SE,smallclouds
+SE,small,0-0,0-12,12-12,12-0
 BG,-1,-1,clouds,BLD,-1
 BG,-1,0,clouds,BL0,-1
 BG,-1,1,clouds,BL0,-1

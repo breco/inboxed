@@ -11,10 +11,13 @@ import com.inboxed.helpers.ImageController;
 import com.inboxed.helpers.RoundController;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
+import com.inboxed.stages.AncientRuins;
 import com.inboxed.stages.BigCity;
 import com.inboxed.stages.Clouds;
+import com.inboxed.stages.ExplosiveFactory;
 import com.inboxed.stages.Forest;
 import com.inboxed.stages.IceRink;
+import com.inboxed.stages.RapidRiver;
 import com.inboxed.stages.Snowland;
 import com.inboxed.stages.Stage;
 
@@ -39,12 +42,14 @@ public class ClassicMode implements Screen{
 
 	public Stage getStage(String name){
 		if(name.equals("forest")) return new Forest(name);
-		if(name.equals("snowland")) return new Snowland(name);
-		if(name.equals("clouds")) return new Clouds(name);
-		if(name.equals("iceRink")) return new IceRink(name);
-        if(name.equals("bigCity")) return new BigCity(name);
-
-		else return null;
+		else if(name.equals("snowland")) return new Snowland(name);
+        else if(name.equals("clouds")) return new Clouds(name);
+        else if(name.equals("iceRink")) return new IceRink(name);
+        else if(name.equals("bigCity")) return new BigCity(name);
+        else if(name.equals("rapidRiver")) return new RapidRiver(name);
+        else if(name.equals("ancientRuins")) return new AncientRuins(name);
+        else if(name.equals("explosiveFactory")) return new ExplosiveFactory(name);
+        else return null;
 	}
 	public ClassicMode(final MainGame game,Array<String> playerNames, String stageName) {
         this.game = game;
@@ -56,10 +61,10 @@ public class ClassicMode implements Screen{
         cam2.setToOrtho(false, MainGame.width, MainGame.height);
         
         images = new ImageController(stageName);
-
+		round = new RoundController();
         stage = getStage(stageName);
         stage.setBounds(this);
-        round = new RoundController();
+
         int i = 0;
 		playerNames.shuffle();
         for(String name : playerNames){
@@ -138,7 +143,7 @@ public class ClassicMode implements Screen{
         	round.update();
             hud.update();
         }
-        if(round.playersPlaying == 1){
+        if(round.playersPlaying <= 1){
 			for(Character chr : round.players){
 				if(!chr.lose) game.setScreen(new WinnerScreen(game,chr.name));
 			}

@@ -44,10 +44,14 @@ public class StageSelect {
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/clouds/blocked.png"))),"clouds"));
         stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/iceBlock.png"))),"iceRink"));
 		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/bigCity/blocked.png"))),"bigCity"));
+        stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/rapidRiver/blocked.png"))),"rapidRiver"));
+		stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/ancientRuins/blocked.png"))),"ancientRuins"));
+        stages.add(new Pair<Sprite,String>(new Sprite(new Texture(Gdx.files.internal("blocks/explosiveFactory/blocked.png"))),"explosiveFactory"));
+
 
 		int x = 0,y = 0;
 		for(Pair<Sprite,String> pair : stages){
-			pair.sprite.setBounds(200+150*x,300-y*150,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
+			pair.sprite.setBounds(50+150*x,300-y*150,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
 			x++;
 			if(x > 3){
 				x = 0;

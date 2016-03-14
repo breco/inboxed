@@ -11,6 +11,7 @@ public class ImageController {
 	public Texture center, center1, center2,blocked; // Board blocks
 	public Texture center3, center4,center5;
 	public Texture borderC, borderC1, borderC2; // Center BG blocks
+	public Texture borderC3, borderC4, borderC5;
 	public Texture borderD, borderD1, borderD2; // Bottom BG blocks
 	public Texture borderL, borderL1, borderL2; // Left BG blocks
 	public Texture borderR, borderR1, borderR2; // Right BG blocks
@@ -33,6 +34,9 @@ public class ImageController {
 		if (Gdx.files.internal("blocks/"+name+"/borderC0.png").exists()) borderC =  new Texture(Gdx.files.internal("blocks/"+name+"/borderC0.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderC1.png").exists()) borderC1 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC1.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderC2.png").exists()) borderC2 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC2.png"));
+		if (Gdx.files.internal("blocks/"+name+"/borderC3.png").exists()) borderC3 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC3.png"));
+		if (Gdx.files.internal("blocks/"+name+"/borderC4.png").exists()) borderC4 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC4.png"));
+		if (Gdx.files.internal("blocks/"+name+"/borderC5.png").exists()) borderC5 = new Texture(Gdx.files.internal("blocks/"+name+"/borderC5.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderD0.png").exists()) borderD =  new Texture(Gdx.files.internal("blocks/"+name+"/borderD0.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderD1.png").exists()) borderD1 = new Texture(Gdx.files.internal("blocks/"+name+"/borderD1.png"));
 		if (Gdx.files.internal("blocks/"+name+"/borderD1.png").exists()) borderD2 = new Texture(Gdx.files.internal("blocks/"+name+"/borderD2.png"));
@@ -69,6 +73,9 @@ public class ImageController {
 		else if(code.equals("BC0")) return borderC;
 		else if(code.equals("BC1")) return borderC1;
 		else if(code.equals("BC2")) return borderC2;
+		else if(code.equals("BC3")) return borderC3;
+		else if(code.equals("BC4")) return borderC4;
+		else if(code.equals("BC5")) return borderC5;
 		else if(code.equals("BD0")) return borderD;
 		else if(code.equals("BD1")) return borderD1;
 		else if(code.equals("BD2")) return borderD2;

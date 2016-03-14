@@ -192,7 +192,7 @@ public abstract class Character {
 	public void changeDir(Pair<Block,String> pair){
 		if(moves <= 0) return;
 		if(useStatus(pair)) return;
-		System.out.println("this.dir="+this.dir+"_dir received="+dir+".");
+		//System.out.println("this.dir="+this.dir+"_dir received="+dir+".");
 		if (this.dir != pair.getString() && !pair.getString().equals(" ")){
 			this.dir = pair.getString();
 			moving = true;

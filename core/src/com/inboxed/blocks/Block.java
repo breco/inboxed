@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
-import com.inboxed.characters.Character;
 
 
 public abstract class Block {
@@ -20,7 +20,6 @@ public abstract class Block {
 	public boolean pressed;
 	public boolean abilityActivated;
 	public boolean finished;
-	public boolean background;
 	//TEST
 	public Block(int x, int y, int points, String name, Texture image){
 		pos_x = x;
@@ -29,7 +28,8 @@ public abstract class Block {
 		if(image != null) sprite = new Sprite(image);
 		else sprite = new Sprite(ClassicMode.images.getTexture("DEFAULT"));
 		sprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-		pointSprite = new Sprite(ClassicMode.images.normalPoints.get(points-1));
+        if(points == 0) pointSprite = new Sprite(ClassicMode.images.blocked);
+		else pointSprite = new Sprite(ClassicMode.images.normalPoints.get(points-1));
 		pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE,MainGame.SPRITESIZE, MainGame.SPRITESIZE);
 		pressed = false;
 		abilityActivated = false;
@@ -44,7 +44,8 @@ public abstract class Block {
 		
 		sprite = new Sprite(image);
 		sprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-		pointSprite = new Sprite(new Texture(Gdx.files.internal("points/point-"+points+".png")));
+        if(points == 0) pointSprite = new Sprite(ClassicMode.images.blocked);
+        else pointSprite = new Sprite(new Texture(Gdx.files.internal("points/point-"+points+".png")));
 		pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE,MainGame.SPRITESIZE, MainGame.SPRITESIZE);
 		pressed = false;
 		abilityActivated = false;
@@ -64,6 +65,13 @@ public abstract class Block {
 	}
 	public void restore(int points){
         this.points = points;
-        pointSprite.setTexture(ClassicMode.images.specialPoints.get(points-1));
+		if(points > 0) pointSprite.setTexture(ClassicMode.images.specialPoints.get(points-1));
+        else pointSprite.setTexture(ClassicMode.images.blocked);
+    }
+    public void changePosition(int x, int y){
+        pos_x = x;
+        pos_y = y;
+        sprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
+        pointSprite.setPosition(pos_x*MainGame.SPRITESIZE,pos_y*MainGame.SPRITESIZE);
     }
 }

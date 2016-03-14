@@ -1,4 +1,4 @@
-SE,city
+SE,small,0-0,8-8,8-0,0-8
 BG,-1,-1,bigCity,BLD,-1
 BG,-1,0,bigCity,BL0,-1
 BG,-1,1,bigCity,BL0,-1

@@ -1,4 +1,4 @@
-SE,small
+SE,small,0-0,6-0,6-6,0-6
 BG,-5,-3,snowland,BC0,-1
 BG,-5,-2,snowland,BC0,-1
 BG,-5,-1,snowland,BC0,-1
