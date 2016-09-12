@@ -1,11 +1,10 @@
 package com.inboxed.buttons;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.inboxed.main.MainGame;
+import com.inboxed.screens.ClassicMode;
 
 /**
  * Created by victor on 1/1/16.
@@ -16,7 +15,7 @@ public class SurrenderButton {
 
     public SurrenderButton(){
 
-        sprite = new Sprite(new Texture(Gdx.files.internal(("hud/surrender.png"))));
+        sprite = new Sprite(ClassicMode.images.surrender);
         sprite.setBounds(10, MainGame.height - 75, 65, 65);
 
     }

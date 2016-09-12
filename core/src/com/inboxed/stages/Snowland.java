@@ -1,18 +1,18 @@
 package com.inboxed.stages;
 
-import java.util.Random;
-
-
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.IceBlock;
 import com.inboxed.screens.ClassicMode;
 
+import java.util.Random;
+
 public class Snowland extends Stage{
 	public Random rand;
 	public Block delete;
-	public Snowland(String name) {
-		super(name);
+	public Snowland(String name, OrthographicCamera cam) {
+		super(name,cam);
 		rand = new Random();
 	}
 
@@ -26,7 +26,7 @@ public class Snowland extends Stage{
 			}
 			delete = blocks.blocks.get(r);
 			System.out.println(delete.points);
-			blocks.blocks.add(new IceBlock(delete.pos_x,delete.pos_y,delete.points,"snowland",ClassicMode.images.getTexture("C0")));
+			blocks.blocks.add(new IceBlock(this,delete.pos_x,delete.pos_y,delete.points,"snowland",ClassicMode.images.getTexture("C0")));
 			blocks.blocks.removeIndex(r);
 			System.out.println("STAGE EFFECT!");
 		}
@@ -45,9 +45,9 @@ public class Snowland extends Stage{
 	}
 
 
-	public void input() {
-		blocks.input(ClassicMode.cam);
-		
+	public void input(OrthographicCamera cam){
+		//
+		blocks.input(cam);
 	}
 
 }

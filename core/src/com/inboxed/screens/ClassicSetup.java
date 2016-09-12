@@ -55,6 +55,11 @@ public class ClassicSetup implements Screen {
 	    }
 	}
 	public void update(){
+		if(characterSelect.okPressed){
+			characterSelect.showing = false;
+			stageSelect.showing = true;
+			characterSelect.okPressed = false;
+		}
 		if(!stageSelect.current.equals("") && !stageSelect.showing){
 
 			game.setScreen(new ClassicMode(game,characterSelect.playerNames,stageSelect.current));

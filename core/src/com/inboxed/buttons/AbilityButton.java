@@ -1,10 +1,9 @@
 package com.inboxed.buttons;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.inboxed.screens.ClassicMode;
 
 
 public class AbilityButton {
@@ -13,7 +12,7 @@ public class AbilityButton {
 	public boolean used;
 	public AbilityButton(String name){
 		this.name = name;
-		sprite = new Sprite(new Texture(Gdx.files.internal("hud/"+name+".png")));
+		sprite = new Sprite(ClassicMode.images.power);
 		sprite.setBounds(10,95, 65, 65);
 		used = false;
 	}

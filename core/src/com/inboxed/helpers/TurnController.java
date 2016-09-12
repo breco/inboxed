@@ -1,6 +1,7 @@
 package com.inboxed.helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,6 @@ import com.inboxed.buttons.SurrenderButton;
 import com.inboxed.characters.Character;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
 
 public class TurnController {
 	
@@ -29,9 +29,15 @@ public class TurnController {
 	public AbilityButton abilityButton;
 	public EndButton endButton;
 	public SurrenderButton surrenderButton;
+    public RoundController round;
 	//input
 	Vector3 vec;
-	public TurnController(Character chara){
+	public OrthographicCamera cam;
+
+
+	public TurnController(Character chara, RoundController round, OrthographicCamera cam){
+        this.round = round;
+		this.cam = cam;
 		current = chara;
 		possibleMoves = current.getPossibleMoves();
 		possibleSprites = new Array<Sprite>();
@@ -53,13 +59,13 @@ public class TurnController {
 			possibleSprites.add(sprite);
 		}
 	}
-	public void input(){
+	public void input(OrthographicCamera cam2){
 		if(current.moving) return;
 		if(current.doingAbility) return;
 		if (MyGestures.isTap()){
 			vec.set(MyGestures.tapX,MyGestures.tapY,0);
 
-			ClassicMode.cam2.unproject(vec);
+			cam2.unproject(vec);
 			if(dice.touched(vec)){ // ROLL THE DICE
 				if(dice.rolled) return;
 				dice.roll();
@@ -70,7 +76,7 @@ public class TurnController {
 				if(abilityButton.used || !current.canAbility()) return;
 				abilityButton.used = true;
 				current.startAbility();
-				ClassicMode.stage.blocks.touched = null;
+				round.stage.blocks.touched = null;
 				return;
 			}
 			else if(endButton.touched(vec)){ // END TURN
@@ -80,15 +86,17 @@ public class TurnController {
 			}
 			else if(surrenderButton.touched(vec)){ // SURRENDER
 				current.lose = true;
-				ClassicMode.round.playersPlaying--;
+				round.playersPlaying--;
 				finish = true;
 				return;
 			}
 			vec.set(MyGestures.tapX,MyGestures.tapY,0);
-			ClassicMode.cam.unproject(vec);
+			cam.unproject(vec);
 			for(Pair<Block,String> pair : possibleMoves){
 				if(pair.getBlock().touched(vec)){
 					current.changeDir(pair);
+
+					break;
 				}
 			}
 		}
@@ -103,14 +111,14 @@ public class TurnController {
 			if(current.moving) return;
 			if(possibleMoves.size == 0 && (abilityButton.used || !current.canAbility()) && current.moves != 0){ // END TURN AND LOSE
 				current.lose = true;
-				ClassicMode.round.playersPlaying--;
+				round.playersPlaying--;
 				finish = true;
 				return;
 			}
 			else if(possibleMoves.size == 0 && current.status.contains("arrow")
 					&& (abilityButton.used || !current.canAbility()) && current.moves != 0){
 				current.lose = true;
-				ClassicMode.round.playersPlaying--;
+				round.playersPlaying--;
 
 				finish = true;
 			}

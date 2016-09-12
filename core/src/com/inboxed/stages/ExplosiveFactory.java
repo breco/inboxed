@@ -1,5 +1,6 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.LightningBlock;
@@ -11,8 +12,8 @@ import java.util.Random;
 public class ExplosiveFactory extends Stage{
 
     private Random rand;
-    public ExplosiveFactory(String name) {
-        super(name);
+    public ExplosiveFactory(String name, OrthographicCamera cam ) {
+        super(name, cam);
         rand = new Random();
         for(Block block : blocks.blocks){
             if(block instanceof LightningBlock || block instanceof MegaLightningBlock){
@@ -33,8 +34,8 @@ public class ExplosiveFactory extends Stage{
         blocks.draw(batch);
 
     }
-    public void input(){
-        blocks.input(ClassicMode.cam);
+    public void input(OrthographicCamera cam){
+        blocks.input(cam);
     }
 
 }

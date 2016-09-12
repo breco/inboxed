@@ -7,16 +7,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.LightningBlock;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 
 public class Rocky extends Character {
 	
 	public Texture target;
 	public Array<Sprite> possibleSprites;
-	public Rocky(int x, int y, String name) {
-		super(x, y, name);
+	public Rocky(int x, int y, String name, Stage stage, RoundController round) {
+		super(x, y, name, stage,round);
 		target = new Texture(Gdx.files.internal("blocks/targetAttack.png"));
 		possibleSprites = new Array<Sprite>();
 		abilityCost = 10;
@@ -40,7 +42,7 @@ public class Rocky extends Character {
 	public void getNearbyBlocks(){
 		possibleSprites.clear();
 		Sprite sprite;
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : blocks.blocks){
 			if(!block.pressed && block.points > 0){
 				for(int i = pos_x -1; i <= pos_x +1; i++){
 					for(int j = pos_y -1; j <= pos_y+1;j++){
@@ -55,7 +57,7 @@ public class Rocky extends Character {
 		}	
 	}
 	public boolean areNearbyBlocks(){
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : blocks.blocks){
 			if(!block.pressed && block.points > 0){
 				for(int i = pos_x -1; i <= pos_x +1; i++){
 					for(int j = pos_y -1; j <= pos_y+1;j++){
@@ -69,7 +71,7 @@ public class Rocky extends Character {
 		return false;
 	}
 	public void ability() { //turns a square into a lightning square
-		Block block = ClassicMode.stage.blocks.touched;
+		Block block = blocks.touched;
 		if(block ==null) return;
 		if(block.pressed || block.points <= 0) return;
 		if(possibleSprites.size == 0){
@@ -81,8 +83,8 @@ public class Rocky extends Character {
 			/*block.points = 0;
 			block.pointSprite = new Sprite(new Texture(Gdx.files.internal("blocks/blocked.png")));
 			block.pointSprite.setBounds(block.pos_x*128, block.pos_y*128, 128, 128);*/
-			ClassicMode.stage.blocks.blocks.add( new LightningBlock(block.pos_x,block.pos_y,block.points,"forest",ClassicMode.images.getTexture("C0")));
-			ClassicMode.stage.blocks.blocks.removeValue(block, false);
+			blocks.blocks.add( new LightningBlock(stage,block.pos_x,block.pos_y,block.points,"forest",ClassicMode.images.getTexture("C0")));
+			blocks.blocks.removeValue(block, false);
 			doingAbility = false;
 			possibleSprites.clear();
 			

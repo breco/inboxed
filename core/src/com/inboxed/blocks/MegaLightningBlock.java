@@ -2,14 +2,15 @@ package com.inboxed.blocks;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 
 public class MegaLightningBlock extends Block{
@@ -18,8 +19,8 @@ public class MegaLightningBlock extends Block{
     public Array<Sprite> possibleSprites;
     public Texture target;
     public Character chr;
-    public MegaLightningBlock(int x, int y, int points, String name, Texture image) {
-        super(x, y, points, name,image);
+    public MegaLightningBlock(Stage stage, int x, int y, int points, String name, Texture image) {
+        super(stage, x, y, points, name,image);
         icon = new Sprite(new Texture("blocks/lightningBlock.png"));
         pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
         target = new Texture(Gdx.files.internal("blocks/targetBlock.png"));

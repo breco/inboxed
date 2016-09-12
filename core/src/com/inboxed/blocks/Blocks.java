@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 import java.util.Random;
 
@@ -25,7 +26,12 @@ public class Blocks {
 	public int FRUNTUM = 40;
 	public int mid = MainGame.SPRITESIZE/2;
 	public String size;
-	public Blocks(String name){
+    public Array<Integer> positions = new Array<Integer>();
+    public OrthographicCamera cam;
+    public Stage stage;
+ 	public Blocks(String name, OrthographicCamera cam, Stage stage){
+        this.stage = stage;
+        this.cam = cam;
 		blocks = new Array<Block>();
 		background = new Array<Block>();
 		Random rand = new Random();
@@ -54,9 +60,11 @@ public class Blocks {
                 size = subline[1];
                 for(int i = 2;i < subline.length;i++){
 					position = subline[i].split("-");
-                    ClassicMode.round.positions.add(Integer.parseInt(position[0]));
-                    ClassicMode.round.positions.add(Integer.parseInt(position[1]));
-				}
+                    //ClassicMode.round.positions.add(Integer.parseInt(position[0]));
+                    //ClassicMode.round.positions.add(Integer.parseInt(position[1]));
+                    positions.add(Integer.parseInt(position[0]));
+                    positions.add(Integer.parseInt(position[1]));
+                }
             }
 			else if(subline[0].equals("B")){
 				System.out.println(line);
@@ -66,54 +74,54 @@ public class Blocks {
 				}
 
 				if(subline[4].equals("LI")){ //lightning block
-					blocks.add(new LightningBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
+					blocks.add(new LightningBlock(stage,x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
 				else if(subline[4].equals("MLI")){ //Mega lightning block
-					blocks.add(new MegaLightningBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
+					blocks.add(new MegaLightningBlock(stage,x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
 				else if(subline[4].equals("TO")){ //Tornado Block
-					blocks.add(new TornadoBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
+					blocks.add(new TornadoBlock(stage,x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.center));
 				}
 				else if(subline[4].equals("ARU")){ //
-					blocks.add(new ArrowBlock(x,y,rand.nextInt(6)+1,"U","forest",ClassicMode.images.center));
+					blocks.add(new ArrowBlock(stage,x,y,rand.nextInt(6)+1,"U","forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("ARD")){
-					blocks.add(new ArrowBlock(x,y,rand.nextInt(6)+1,"D","forest",ClassicMode.images.center));
+					blocks.add(new ArrowBlock(stage,x,y,rand.nextInt(6)+1,"D","forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("ARL")){
-					blocks.add(new ArrowBlock(x,y,rand.nextInt(6)+1,"L","forest",ClassicMode.images.center));
+					blocks.add(new ArrowBlock(stage,x,y,rand.nextInt(6)+1,"L","forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("ARR")){
-					blocks.add(new ArrowBlock(x,y,rand.nextInt(6)+1,"R","forest",ClassicMode.images.center));
+					blocks.add(new ArrowBlock(stage,x,y,rand.nextInt(6)+1,"R","forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("IC")){
-					blocks.add(new IceBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
+					blocks.add(new IceBlock(stage,x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("TE")){
-					blocks.add(new TeleportBlock(x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
+					blocks.add(new TeleportBlock(stage,x,y,rand.nextInt(6)+1,"forest",ClassicMode.images.center));
 				}
 				else if(subline[4].equals("MO")){
-					blocks.add(new MovingBlock(subline[1],rand.nextInt(6)+1,"forest",ClassicMode.images.center5));
+					blocks.add(new MovingBlock(stage,subline[1],rand.nextInt(6)+1,"forest",ClassicMode.images.center5));
 				}
 				else{
-					blocks.add(new NormalBlock(x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));
+					blocks.add(new NormalBlock(stage,x,y,rand.nextInt(6)+1,subline[3],ClassicMode.images.getTexture(subline[4])));
 				}
 
 			}
 			else if(subline[0].equals("BG")){
 				x = Integer.parseInt(subline[1]);
 				y = Integer.parseInt(subline[2]);
-				background.add(new BackgroundBlock(x,y,1,subline[3],ClassicMode.images.getTexture(subline[4])));
+				background.add(new BackgroundBlock(stage,x,y,1,subline[3],ClassicMode.images.getTexture(subline[4])));
 			}
 		}
 	}
 	public void draw(SpriteBatch batch){
 		for(Block block : background){
-			if(ClassicMode.cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
+			if(cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
 				block.draw(batch);
 		}
 		for (Block block : blocks){
-			if(ClassicMode.cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
+			if(cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
 				block.draw(batch);
 		}
 		for(Sprite sprite : possibles){
@@ -155,5 +163,11 @@ public class Blocks {
 		}
 		
 	}
+    public Block getBlock(int x, int y){
+        for(Block block : blocks){
+            if(block.pos_x == x && block.pos_y == y) return block;
+        }
+        return null;
+    }
 
 }

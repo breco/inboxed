@@ -41,14 +41,14 @@ public class ClassicMode implements Screen{
 	public float x,y;
 
 	public Stage getStage(String name){
-		if(name.equals("forest")) return new Forest(name);
-		else if(name.equals("snowland")) return new Snowland(name);
-        else if(name.equals("clouds")) return new Clouds(name);
-        else if(name.equals("iceRink")) return new IceRink(name);
-        else if(name.equals("bigCity")) return new BigCity(name);
-        else if(name.equals("rapidRiver")) return new RapidRiver(name);
-        else if(name.equals("ancientRuins")) return new AncientRuins(name);
-        else if(name.equals("explosiveFactory")) return new ExplosiveFactory(name);
+		if(name.equals("forest")) return new Forest(name,cam);
+		else if(name.equals("snowland")) return new Snowland(name,cam);
+        else if(name.equals("clouds")) return new Clouds(name,cam);
+        else if(name.equals("iceRink")) return new IceRink(name,cam);
+        else if(name.equals("bigCity")) return new BigCity(name,cam);
+        else if(name.equals("rapidRiver")) return new RapidRiver(name,cam);
+        else if(name.equals("ancientRuins")) return new AncientRuins(name,cam);
+        else if(name.equals("explosiveFactory")) return new ExplosiveFactory(name,cam);
         else return null;
 	}
 	public ClassicMode(final MainGame game,Array<String> playerNames, String stageName) {
@@ -61,8 +61,9 @@ public class ClassicMode implements Screen{
         cam2.setToOrtho(false, MainGame.width, MainGame.height);
         
         images = new ImageController(stageName);
-		round = new RoundController();
+
         stage = getStage(stageName);
+		round = new RoundController(stage,cam);
         stage.setBounds(this);
 
         int i = 0;
@@ -111,9 +112,9 @@ public class ClassicMode implements Screen{
      // 2)Input handling
         if(!hud.movingCam && !(hud.current.moving && hud.current.dir.equals("TO"))){
         	input();
-        	stage.input();
+        	stage.input(cam);
         	if(stage.blocks.special == null){
-        		round.input(cam);	
+        		round.input(cam2);
         	}
         }
         
@@ -141,7 +142,7 @@ public class ClassicMode implements Screen{
         stage.update();
         if(stage.blocks.special == null){
         	round.update();
-            hud.update();
+            hud.update(cam);
         }
         if(round.playersPlaying <= 1){
 			for(Character chr : round.players){

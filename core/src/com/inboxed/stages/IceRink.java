@@ -1,5 +1,6 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.IceBlock;
@@ -12,8 +13,8 @@ public class IceRink extends Stage{
     public Random rand;
     private Block delete;
     private int changes;
-    public IceRink(String name) {
-        super(name);
+    public IceRink(String name, OrthographicCamera cam) {
+        super(name, cam);
         rand = new Random();
         int r;
         if(blocks.size.equals("small")){
@@ -44,7 +45,7 @@ public class IceRink extends Stage{
                 r = rand.nextInt(blocks.blocks.size);
                 delete = blocks.blocks.get(r);
             }
-            blocks.blocks.add(new IceBlock(delete.pos_x, delete.pos_y, rand.nextInt(6) + 1, "snowland", ClassicMode.images.getTexture("C0")));
+            blocks.blocks.add(new IceBlock(this,delete.pos_x, delete.pos_y, rand.nextInt(6) + 1, "snowland", ClassicMode.images.getTexture("C0")));
             blocks.blocks.removeIndex(r);
 
         }
@@ -69,8 +70,8 @@ public class IceRink extends Stage{
         blocks.draw(batch);
 
     }
-    public void input(){
-        blocks.input(ClassicMode.cam);
+    public void input(OrthographicCamera cam){
+        blocks.input(cam);
     }
 
 }

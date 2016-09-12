@@ -6,16 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 public class Tac extends Character{
     public Texture target;
     public Array<Block> newBlocks, removeBlocks;
     public Array<Sprite> possibleSprites;
 
-    public Tac(int x, int y, String name) {
-        super(x, y, name);
+    public Tac(int x, int y, String name, Stage stage, RoundController round) {
+        super(x, y, name, stage,round);
         target = new Texture(Gdx.files.internal("blocks/targetAttack.png"));
         newBlocks = new Array<Block>();
         removeBlocks = new Array<Block>();
@@ -38,7 +39,7 @@ public class Tac extends Character{
     public void getNearbyBlocks(){
         possibleSprites.clear();
         Sprite sprite;
-        for(Character chr : ClassicMode.round.players){
+        for(Character chr : round.players){
             if(!chr.lose && !chr.equals(this)){
                 sprite = new Sprite(target);
                 sprite.setBounds(chr.block.pos_x*MainGame.SPRITESIZE,chr.block.pos_y*MainGame.SPRITESIZE,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
@@ -54,8 +55,8 @@ public class Tac extends Character{
         }
         return false;
     }
-    public void ability() { // SWAP ! -> Switch positions with one of your playing opponents!
-        Block block = ClassicMode.stage.blocks.touched;
+    public void ability() { // SWAP ! -> Switch positions with one of your opponents!
+        Block block = stage.blocks.touched;
         System.out.println("ability!");
         if(block ==null) return;
         if(possibleSprites.size == 0){
@@ -64,7 +65,7 @@ public class Tac extends Character{
         }
         if(possibleContains(block)){
             Character swapped = null;
-            for(Character chr : ClassicMode.round.players){
+            for(Character chr : round.players){
                 if(chr.getBlock().equals(block)){
                     swapped = chr;
                     break;

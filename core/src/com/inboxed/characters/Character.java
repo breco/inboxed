@@ -1,18 +1,20 @@
 package com.inboxed.characters;
 
 
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
+import com.inboxed.blocks.Blocks;
 import com.inboxed.blocks.IceBlock;
 import com.inboxed.blocks.TeleportBlock;
 import com.inboxed.helpers.Pair;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 import java.util.Random;
 
@@ -41,7 +43,18 @@ public abstract class Character {
 	public int energyPoints;
 	//status
 	public String status;
-	public Character(int x, int y, String name){
+	//blocks
+    public Stage stage;
+	public Blocks blocks;
+    public OrthographicCamera cam;
+    public RoundController round;
+    //online
+    public String id = "";
+	public Character(int x, int y, String name, Stage stage, RoundController round){
+        this.round = round;
+        this.stage = stage;
+		blocks = stage.blocks;
+        this.cam = blocks.cam;
 		pos_x = x;
 		pos_y = y;
 		moves = 0;
@@ -67,7 +80,7 @@ public abstract class Character {
 	public abstract void startAbility();
 	public abstract boolean canAbility();
 	public Block getBlock(){
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : blocks.blocks){
 			if(block.pos_x == pos_x && block.pos_y == pos_y){
 				return block;
 			}
@@ -87,7 +100,7 @@ public abstract class Character {
 			return possibleMoves;
 		}
 		else if(status.contains("arrow") || status.contains("frozen")){ //ARROW AND FROZEN STATUS
-			for(Block block : ClassicMode.stage.blocks.blocks){
+			for(Block block : blocks.blocks){
 				if(block.points > 0 && !block.pressed){
 					if(status.contains("L") && block.pos_x == pos_x - 1 && block.pos_y == pos_y){ //LEFT
 						possibleMoves.add(new Pair<Block,String>(block,"L"));
@@ -111,7 +124,7 @@ public abstract class Character {
 			}
 		}
 		else if(status.equals("teleport")){
-			for(Block block : ClassicMode.stage.blocks.blocks){
+			for(Block block : blocks.blocks){
 				if(block instanceof TeleportBlock && !block.equals(this) && block.points > 0 && !block.pressed){
 					possibleMoves.add(new Pair<Block,String>(block,"T"));
 				}
@@ -120,7 +133,7 @@ public abstract class Character {
 			status = "";
 
 		}
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : blocks.blocks){
 			if(block.points > 0 && !block.pressed){
 				if(block.pos_x == pos_x - 1 && block.pos_y == pos_y){ //LEFT
 					possibleMoves.add(new Pair<Block, String>(block, "L"));
@@ -143,17 +156,17 @@ public abstract class Character {
 		if(status.equals("tornado")){
 			Random rand = new Random();
 			Block temp;
-			int r = rand.nextInt(ClassicMode.stage.blocks.blocks.size);
-			temp = ClassicMode.stage.blocks.blocks.get(r);
+			int r = rand.nextInt(blocks.blocks.size);
+			temp = blocks.blocks.get(r);
 			while(temp.pressed || temp.points <= 0){
-				r = rand.nextInt(ClassicMode.stage.blocks.blocks.size);
-				temp = ClassicMode.stage.blocks.blocks.get(r);
+				r = rand.nextInt(blocks.blocks.size);
+				temp = blocks.blocks.get(r);
 				System.out.println("while:"+r);
 			}
 			
 			temp = block;
 			System.out.println("NO WHILE "+r);
-			block = ClassicMode.stage.blocks.blocks.get(r);
+			block = blocks.blocks.get(r);
 			block.pressed = true;
 			temp.pressed = false;
 			
@@ -190,7 +203,7 @@ public abstract class Character {
 		return false;
 	}
 	public void changeDir(Pair<Block,String> pair){
-		if(moves <= 0) return;
+		//if(moves <= 0) return;
 		if(useStatus(pair)) return;
 		//System.out.println("this.dir="+this.dir+"_dir received="+dir+".");
 		if (this.dir != pair.getString() && !pair.getString().equals(" ")){
@@ -208,20 +221,20 @@ public abstract class Character {
 
 			if(sprite.getX() < block.sprite.getX()){
 				sprite.setPosition(sprite.getX() + MOV, sprite.getY());
-				ClassicMode.cam.translate(MOV,0);
+				cam.translate(MOV,0);
 			}
 			else if(sprite.getX() > block.sprite.getX()){
-				ClassicMode.cam.translate(-MOV,0);
+				cam.translate(-MOV,0);
 				sprite.setPosition(sprite.getX() - MOV, sprite.getY());
 
 			}
 			if(sprite.getY() < block.sprite.getY()){
 				sprite.setPosition(sprite.getX(), sprite.getY() + MOV);
-				ClassicMode.cam.translate(0,MOV);
+				cam.translate(0,MOV);
 			}
 			else if(sprite.getY() > block.sprite.getY()){
 				sprite.setPosition(sprite.getX(), sprite.getY() - MOV);
-				ClassicMode.cam.translate(0,-MOV);
+				cam.translate(0,-MOV);
 			}
 			sprite.rotate(20);
 			if(sprite.getX() == block.sprite.getX() && sprite.getY() == block.sprite.getY() && movTimer % 18 == 0){
@@ -259,11 +272,16 @@ public abstract class Character {
 			temp.pressed = false;
 			dir = " ";
 			moves--;
+			System.out.println("Reducing moves:"+moves);
+
 			if(status.contains("frozen") && !(block instanceof IceBlock)) status = "";
-			movesImage = new Texture(Gdx.files.internal("numbers/"+moves+".png"));
+            if(moves > -1) movesImage = new Texture(Gdx.files.internal("numbers/"+moves+".png"));
 			energyPoints++;
 		}
 		//animation();
 	}
+    public void setID(String id){
+        this.id = id;
+    }
 	
 }

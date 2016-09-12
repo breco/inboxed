@@ -6,16 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 public class Wheelie extends Character{
     public Texture target;
     public Array<Block> newBlocks, removeBlocks;
     public Array<Sprite> possibleSprites;
 
-    public Wheelie(int x, int y, String name) {
-        super(x, y, name);
+    public Wheelie(int x, int y, String name, Stage stage, RoundController round) {
+        super(x,y,name,stage,round);
         target = new Texture(Gdx.files.internal("blocks/targetAttack.png"));
         newBlocks = new Array<Block>();
         removeBlocks = new Array<Block>();
@@ -33,7 +34,7 @@ public class Wheelie extends Character{
     }
 
     public boolean areNearbyBlocks(){ //check if are blocks available for the ability effect
-        for(Block block : ClassicMode.stage.blocks.blocks){
+        for(Block block : stage.blocks.blocks){
             if(!block.pressed && block.points > 0){
                 if(block.pos_x == pos_x + 2 && block.pos_y == pos_y){
                     return true;
@@ -55,7 +56,7 @@ public class Wheelie extends Character{
         possibleSprites.clear();
         Sprite sprite;
         boolean flag = false;
-        for(Block block : ClassicMode.stage.blocks.blocks){
+        for(Block block : stage.blocks.blocks){
             if(!block.pressed && block.points > 0){
                 if(block.pos_x == pos_x + 2 && block.pos_y == pos_y){
                     flag = true;
@@ -87,7 +88,7 @@ public class Wheelie extends Character{
         return false;
     }
     public void ability() { // JUMP ! -> You can jump through an adyacent block !
-        Block block = ClassicMode.stage.blocks.touched;
+        Block block = stage.blocks.touched;
         if(block ==null) return;
         if(block.pressed || block.points <= 0) return;
         if(possibleSprites.size == 0){

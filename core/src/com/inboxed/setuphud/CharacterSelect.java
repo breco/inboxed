@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicSetup;
 
 public class CharacterSelect {
 	
@@ -28,7 +27,7 @@ public class CharacterSelect {
 	public Array<String> playerNames;
 	public int players;
 	public boolean showing;
-
+	public boolean okPressed = false;
 	public BitmapFont font;
 	public Array<Sprite> playerDone;
 	public int playerNum;
@@ -92,8 +91,7 @@ public class CharacterSelect {
 		}
 		if(ok.getBoundingRectangle().contains(vec.x,vec.y)){
 			if(players == 0) {
-				showing = false;
-				ClassicSetup.stageSelect.showing = true;
+				okPressed = true;
 			}
 		}
 	}

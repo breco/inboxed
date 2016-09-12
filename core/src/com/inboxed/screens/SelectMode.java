@@ -2,60 +2,52 @@ package com.inboxed.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
 
-
-
 /**
- * Cr eated by victor on 1/2/16.
+ * Created by victor on 6/11/16.
  */
-public class WinnerScreen implements Screen {
-
+public class SelectMode implements Screen {
     public MainGame game;
     public static OrthographicCamera cam;
     public Vector3 vec;
-    public Sprite ok, winner;
-    public BitmapFont font;
-    public String winnerName;
-    public WinnerScreen(MainGame game, String winner){
-        winnerName = winner;
-        ok = new Sprite(new Texture(Gdx.files.internal("setupHud/ok.png")));
-        ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-        this.winner = new Sprite(new Texture(Gdx.files.internal("characters/"+winner+".png")));
-        this.winner.setBounds(MainGame.width/2,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
-        font = new BitmapFont();
-        font.getData().setScale(2);
-        font.setColor(Color.BLACK);
+    //
+    public Sprite local, online;
+    public SelectMode(MainGame game){
         this.game = game;
         cam = new OrthographicCamera();
         vec = new Vector3();
         cam.setToOrtho(false, MainGame.width, MainGame.height);
-
+        local = new Sprite(new Texture(Gdx.files.internal("hud/local.png")));
+        local.setPosition(100,100);
+        online = new Sprite(new Texture(Gdx.files.internal("hud/online.png")));
+        online.setPosition(100,300);
 
     }
     public void input(){
         if (MyGestures.isTap()){
-            vec.set(MyGestures.tapX,MyGestures.tapY,0);
+            vec.set(MyGestures.tapX, MyGestures.tapY, 0);
             cam.unproject(vec);
-            if(ok.getBoundingRectangle().contains(vec.x,vec.y)) game.setScreen(new SelectMode(game));
-
+            if(local.getBoundingRectangle().contains(vec.x,vec.y)){
+                game.setScreen(new ClassicSetup(game));
+            }
+            else if(online.getBoundingRectangle().contains(vec.x,vec.y)){
+                game.setScreen(new OnlineSetup(game));
+            }
         }
     }
     public void update(){
 
     }
     public void draw(){
-        ok.draw(game.batch);
-        winner.draw(game.batch);
-        font.draw(game.batch,winnerName+" wins!",MainGame.width/2 - 100, MainGame.height - 30);
+        local.draw(game.batch);
+        online.draw(game.batch);
     }
 
     @Override

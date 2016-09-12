@@ -1,5 +1,6 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.main.MainGame;
@@ -11,8 +12,8 @@ public class Forest extends Stage{
 	
 	private Random rand;
 	private int spawn;
-	public Forest(String name) {
-		super(name);
+	public Forest(String name, OrthographicCamera cam ) {
+		super(name, cam);
 		rand = new Random();
 		if(blocks.size.equals("small")){
 			spawn = 1;
@@ -44,8 +45,8 @@ public class Forest extends Stage{
 		blocks.draw(batch);
 		
 	}
-	public void input(){
-		blocks.input(ClassicMode.cam);
+	public void input(OrthographicCamera cam){
+		blocks.input(cam);
 	}
 
 }

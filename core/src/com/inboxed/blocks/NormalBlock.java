@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 import java.util.Random;
 
 public class NormalBlock extends Block {
-	public NormalBlock(int x, int y, int points, String name, Texture image) {
-		super(x, y, points,name,image);
+	public NormalBlock(Stage stage, int x, int y, int points, String name, Texture image) {
+		super(stage, x, y, points,name,image);
 	}
 	public NormalBlock(int x, int y, int points, String name) {
 		super(x, y, points,name);

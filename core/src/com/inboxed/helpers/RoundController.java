@@ -3,6 +3,7 @@ package com.inboxed.helpers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.inboxed.blocks.Blocks;
 import com.inboxed.characters.Character;
 import com.inboxed.characters.Chilly;
 import com.inboxed.characters.Rocky;
@@ -10,7 +11,7 @@ import com.inboxed.characters.Simirror;
 import com.inboxed.characters.Tac;
 import com.inboxed.characters.Wheelie;
 import com.inboxed.inputs.MyGestures;
-import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 
 public class RoundController {
@@ -20,13 +21,18 @@ public class RoundController {
 	public int turnNumber;
 	public int playersPlaying;
 	public ClassicHud hud;
-    //TEST
     private boolean drawTouched;
     private int dt_timer,MAX_DT_TIMER;
 	public Array<Integer> positions;
-	public RoundController(){
+	private Blocks blocks;
+    public OrthographicCamera cam;
+    public Stage stage;
+	public RoundController(Stage stage, OrthographicCamera cam){
+        this.stage = stage;
+        this.cam = cam;
+		this.blocks = stage.blocks;
 		players = new Array<Character>();
-        positions = new Array<Integer>();
+        positions = blocks.positions;
 		roundNumber = 1;
 		turnNumber =1;
         drawTouched = false;
@@ -56,22 +62,22 @@ public class RoundController {
         int x = positions.get(number*2);
         int y = positions.get(number*2+1);
 		if(name.equals("rocky")){
-			players.add(new Rocky(x,y,"rocky"));
+			players.add(new Rocky(x,y,"rocky",stage,this));
 		}
 		else if(name.equals("simirror")){
-			players.add(new Simirror(x,y,"simirror"));
+			players.add(new Simirror(x,y,"simirror",stage,this));
 		}
 		else if(name.equals("chilly")){
-			players.add(new Chilly(x,y,"chilly"));
+			players.add(new Chilly(x,y,"chilly",stage,this));
 		}
         else if(name.equals("tac")){
-            players.add(new Tac(x,y,"tac"));
+            players.add(new Tac(x,y,"tac",stage,this));
         }
 		else if(name.equals("wheelie")){
-			players.add(new Wheelie(x,y,"wheelie"));
+			players.add(new Wheelie(x,y,"wheelie",stage,this));
 		}
 		else{
-			players.add(new Rocky(x,y,name));
+            players.add(new Rocky(x,y,name,stage,this));
 		}
 	}
 	public void nextTurn(){
@@ -80,28 +86,28 @@ public class RoundController {
 			turnNumber =1;
 			roundNumber++;
             System.out.println("ROUND "+roundNumber);
-			ClassicMode.stage.effect();
+			stage.effect();
 		}
 		setTurn(true);
 		
 	}
 	public void setTurn(boolean changeHud){
-		turn = new TurnController(players.get(turnNumber-1));
+		turn = new TurnController(players.get(turnNumber-1), this, cam);
 		while(turn.current.lose){
 			turnNumber++;
 			if(turnNumber > players.size){
 				turnNumber = 1;
 				roundNumber++;
 				System.out.println("ROUND "+roundNumber);
-				ClassicMode.stage.effect();
+				stage.effect();
 			}
-			turn = new TurnController(players.get(turnNumber-1));
+			turn = new TurnController(players.get(turnNumber-1), this, cam);
 		}
 		if (changeHud)
 			hud.startMoveCam();
 	}
-	public void input(OrthographicCamera cam){
-		turn.input();
+	public void input(OrthographicCamera cam2){
+		turn.input(cam2);
 
         if(MyGestures.isLongPress()){
             drawTouched = true;
@@ -120,7 +126,7 @@ public class RoundController {
 			player.draw(batch);
 		}
 
-        if(drawTouched && ClassicMode.stage.blocks.longTouched.pos_x == turn.current.block.pos_x && ClassicMode.stage.blocks.longTouched.pos_y == turn.current.block.pos_y){
+        if(drawTouched && stage.blocks.longTouched.pos_x == turn.current.block.pos_x && stage.blocks.longTouched.pos_y == turn.current.block.pos_y){
 
             turn.current.block.draw(batch);
         }

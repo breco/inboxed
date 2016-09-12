@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
 
 public class ClassicHud {
 	public Array<PlayerInfo> players;
@@ -29,8 +28,8 @@ public class ClassicHud {
 		if(players.size == 1) next = players.get(0);
 		else next = players.get(1);
 	}
-	public void update(){
-		if(movingCam) moveCam(ClassicMode.cam);
+	public void update(OrthographicCamera cam){
+		if(movingCam) moveCam(cam);
 		for(PlayerInfo player : players){
 			player.update();
 		}
@@ -84,22 +83,22 @@ public class ClassicHud {
 	public void moveCam(OrthographicCamera cam){
 		boolean stopX = false, stopY = false;
 
-		if(ClassicMode.cam.position.x > next.sprite.getX()){ //mover camara hacia izq
+		if(cam.position.x > next.sprite.getX()){ //mover camara hacia izq
 			if(cam.position.x <= next.sprite.getX()+MainGame.SPRITESIZE/2) stopX = true;
 			else cam.translate(-camSpeed,0);
 		}
-		else if(ClassicMode.cam.position.x < next.sprite.getX()){ //mover camara hacia der
+		else if(cam.position.x < next.sprite.getX()){ //mover camara hacia der
 			if(cam.position.x >= next.sprite.getX()+MainGame.SPRITESIZE/2) stopX = true;
 			else cam.translate(camSpeed,0);
 		}
 		else{
 			stopX = true;
 		}
-		if(ClassicMode.cam.position.y > next.sprite.getY()){ //mover camara hacia abajo
+		if(cam.position.y > next.sprite.getY()){ //mover camara hacia abajo
 			if(cam.position.y <= next.sprite.getY() + MainGame.SPRITESIZE/2) stopY = true;
 			else cam.translate(0,-camSpeed);
 		}
-		else if(ClassicMode.cam.position.y < next.sprite.getY()){ //mover camara hacia arriba
+		else if(cam.position.y < next.sprite.getY()){ //mover camara hacia arriba
 			if(cam.position.y >= next.sprite.getY() + MainGame.SPRITESIZE/2) stopY = true;
 			else cam.translate(0,camSpeed);
 		}

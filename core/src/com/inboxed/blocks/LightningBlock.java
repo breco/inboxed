@@ -1,23 +1,24 @@
 package com.inboxed.blocks;
 
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
-import com.inboxed.characters.Character;
+import com.inboxed.stages.Stage;
+
 public class LightningBlock extends Block{
 	
 	public Sprite icon;
 	public Array<Sprite> possibleSprites;
 	public Texture target;
 	public Character chr;
-	public LightningBlock(int x, int y, int points, String name, Texture image) {
-		super(x, y, points, name,image);
+	public LightningBlock(Stage stage, int x, int y, int points, String name, Texture image) {
+		super(stage, x, y, points, name,image);
 		icon = new Sprite(new Texture("blocks/lightningBlock.png"));
 		pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
 		target = new Texture(Gdx.files.internal("blocks/targetBlock.png"));
@@ -27,15 +28,7 @@ public class LightningBlock extends Block{
 		
 		
 	}
-	public LightningBlock(int x, int y, int points, String name) {
-		super(x, y, points, name);
-		icon = new Sprite(new Texture("blocks/lightningBlock.png"));
-		pointSprite = new Sprite(new Texture(Gdx.files.internal("points/specialPoint-"+points+".png")));
-		target = new Texture(Gdx.files.internal("blocks/targetBlock.png"));
-		pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-		icon.setBounds(x*MainGame.SPRITESIZE+7,y*MainGame.SPRITESIZE+10, 50, 50);
-		possibleSprites = new Array<Sprite>();
-	}
+
 
 	public void update() {	
 	}
@@ -62,7 +55,7 @@ public class LightningBlock extends Block{
 	}*/
 	public void startAbility(){
 		Sprite sprite;
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : stage.blocks.blocks){
 			if(!block.pressed && block.points > 0 && (block.pos_x == pos_x || block.pos_y == pos_y)){
 				sprite = new Sprite(target);
 				sprite.setBounds(block.pos_x*MainGame.SPRITESIZE,block.pos_y*MainGame.SPRITESIZE,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
@@ -72,7 +65,7 @@ public class LightningBlock extends Block{
 		}
 	}
 	public void ability() {
-		Block block = ClassicMode.stage.blocks.touched;
+		Block block = stage.blocks.touched;
 		if(block ==null) return;
 		//System.out.println(block.pos_x+","+block.pos_y);
 		if(block.pressed || block.points <= 0) return;
@@ -88,10 +81,10 @@ public class LightningBlock extends Block{
 		if(points <=0) return; 
 		points-=1;
 		if (points <= 0){
-			ClassicMode.stage.blocks.special = this;
+			stage.blocks.special = this;
 			pointSprite = new Sprite(ClassicMode.images.blocked);
 			startAbility();
-			ClassicMode.stage.blocks.possibles = possibleSprites;
+			stage.blocks.possibles = possibleSprites;
 		}
 		else{
 			pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));;

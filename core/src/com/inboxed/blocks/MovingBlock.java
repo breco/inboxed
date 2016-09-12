@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 /**
  * Created by victor on 1/3/16.
@@ -17,8 +18,8 @@ public class MovingBlock extends Block {
     public String dirr;
     public Array<Integer> positions;
 
-    public MovingBlock(String poses, int points, String name, Texture image){
-        super(Integer.parseInt(poses.split("_")[0]),Integer.parseInt(poses.split("_")[1]), points, name, image);
+    public MovingBlock(Stage stage, String poses, int points, String name, Texture image){
+        super(stage,Integer.parseInt(poses.split("_")[0]),Integer.parseInt(poses.split("_")[1]), points, name, image);
         positions = new Array<Integer>();
         for(String num : poses.split("_")){
             positions.add(Integer.parseInt(num));

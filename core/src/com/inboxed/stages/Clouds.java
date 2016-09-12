@@ -1,20 +1,20 @@
 package com.inboxed.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.inboxed.screens.ClassicMode;
 
 public class Clouds extends Stage{
 
 
     public Sprite bg,bg2;
 
-    public Clouds(String name) {
+    public Clouds(String name, OrthographicCamera cam) {
         //			if(ClassicMode.cam.frustum.sphereInFrustum(block.sprite.getX()+mid, block.sprite.getY()+mid, 0,FRUNTUM))
 
-        super(name);
+        super(name, cam);
         bg = new Sprite(new Texture(Gdx.files.internal("backgrounds/clouds.png")));
         bg2 = new Sprite(new Texture(Gdx.files.internal("backgrounds/clouds.png")));
         bg.setPosition(-300,-100);
@@ -42,8 +42,8 @@ public class Clouds extends Stage{
         blocks.draw(batch);
 
     }
-    public void input(){
-        blocks.input(ClassicMode.cam);
+    public void input(OrthographicCamera cam){
+        blocks.input(cam);
     }
 
 }

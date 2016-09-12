@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 
 public abstract class Block {
@@ -21,7 +22,9 @@ public abstract class Block {
 	public boolean abilityActivated;
 	public boolean finished;
 	//TEST
-	public Block(int x, int y, int points, String name, Texture image){
+	public Stage stage;
+	public Block(Stage stage, int x, int y, int points, String name, Texture image){
+		this.stage = stage;
 		pos_x = x;
 		pos_y = y;
 		this.points = points;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.inputs.MyGestures;
-import com.inboxed.screens.ClassicSetup;
+import com.inboxed.screens.SelectMode;
 
 public class MainGame extends Game {
 	public SpriteBatch batch;
@@ -19,7 +19,7 @@ public class MainGame extends Game {
 		Gdx.input.setInputProcessor(ges.gd);
 		width = Gdx.graphics.getWidth();
 		height = Gdx.graphics.getHeight();
-		this.setScreen(new ClassicSetup(this));
+		this.setScreen(new SelectMode(this));
 		
 	}
 

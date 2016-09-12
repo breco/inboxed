@@ -6,13 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
 import com.inboxed.blocks.IceBlock;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 public class Chilly extends Character{
 	public Texture target;
 	public Array<Block> newBlocks, removeBlocks;
-	public Chilly(int x, int y, String name) {
-		super(x, y, name);
+	public Chilly(int x, int y, String name, Stage stage,RoundController round) {
+		super(x, y, name, stage,round);
 		target = new Texture(Gdx.files.internal("blocks/targetAttack.png"));
 		newBlocks = new Array<Block>();
 		removeBlocks = new Array<Block>();
@@ -26,7 +28,7 @@ public class Chilly extends Character{
 	}
 
 	public boolean areNearbyBlocks(){
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : stage.blocks.blocks){
 			if(!block.pressed && block.points > 0){
 				for(int i = pos_x -1; i <= pos_x +1; i++){
 					for(int j = pos_y -1; j <= pos_y+1;j++){
@@ -41,14 +43,14 @@ public class Chilly extends Character{
 	}
 	public void ability() {
 		
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : stage.blocks.blocks){
 			if(!block.pressed && block.points > 0 && !(block instanceof IceBlock)){
 				for(int i = pos_x - 1; i <= pos_x + 1; i++){
 					for(int j = pos_y - 1; j <= pos_y + 1;j++){
 	
 						if(block.pos_x == i && block.pos_y == j){
 							System.out.println("freezing: "+block.pos_x+","+block.pos_y);
-							newBlocks.add( new IceBlock(block.pos_x,block.pos_y,block.points,"forest",ClassicMode.images.getTexture("C0")));
+							newBlocks.add( new IceBlock(stage,block.pos_x,block.pos_y,block.points,"forest",ClassicMode.images.getTexture("C0")));
 							removeBlocks.add(block);
 						}
 					}
@@ -56,10 +58,10 @@ public class Chilly extends Character{
 			}
 		}
 		for(Block block : removeBlocks){
-			ClassicMode.stage.blocks.blocks.removeValue(block, false);
+			stage.blocks.blocks.removeValue(block, false);
 		}
 		for(Block block : newBlocks){
-			ClassicMode.stage.blocks.blocks.add(block);
+			stage.blocks.blocks.add(block);
 		}
 		newBlocks.clear();
 		removeBlocks.clear();

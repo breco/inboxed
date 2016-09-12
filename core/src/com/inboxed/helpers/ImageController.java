@@ -19,8 +19,13 @@ public class ImageController {
 	public Texture borderLD, borderLU, borderRD, borderRU; // Corner BG blocks
 	//POINTS
 	public Array<Texture> normalPoints, specialPoints;
-	
-	
+	//DICES
+	public Array<Texture> dices;
+	//NUMBERS
+	public Array<Texture> numbers;
+	//HUD
+	public Texture targetMove;
+	public Texture wrong,moveBG,power,end,surrender;
 	public ImageController(String name){
 		System.out.println("wea");
 		defaultt = new Texture(Gdx.files.internal("blocks/default.png"));
@@ -55,12 +60,22 @@ public class ImageController {
 		if (Gdx.files.internal("blocks/"+name+"/borderRU.png").exists()) borderRU = new Texture(Gdx.files.internal("blocks/"+name+"/borderRU.png"));
 		normalPoints = new Array<Texture>();
 		specialPoints = new Array<Texture>();
+		dices = new Array<Texture>();
+		numbers = new Array<Texture>();
 		for(int i = 1; i<=6;i++){
 			normalPoints.add(new Texture(Gdx.files.internal("points/point-"+i+".png")));
 			specialPoints.add(new Texture(Gdx.files.internal("points/specialPoint-"+i+".png")));
+			dices.add(new Texture(Gdx.files.internal("dices/dice-"+i+".png")));
 		}
-
-		
+		for(int i = 0; i<=9;i++){
+			numbers.add(new Texture(Gdx.files.internal("numbers/"+i+".png")));
+		}
+		targetMove = new Texture(Gdx.files.internal("blocks/targetMove.png"));
+		wrong = new Texture(Gdx.files.internal("hud/wrong.png"));
+		moveBG = new Texture(Gdx.files.internal("hud/moveBg.png"));
+		power = new Texture(Gdx.files.internal("hud/power.png"));
+		end = new Texture(Gdx.files.internal("hud/end.png"));
+		surrender = new Texture(Gdx.files.internal(("hud/surrender.png")));
 	}
 	public Texture getTexture(String code){
 		if(code.equals("DEFAULT")) return defaultt;

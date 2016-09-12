@@ -6,22 +6,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 public class ArrowBlock extends Block{
 
 	public Sprite icon;
 	public String dir;
-	public ArrowBlock(int x, int y, int points, String dir, String name) {
-		super(x, y, points, name);
-		this.dir = dir;
-		icon = new Sprite(new Texture("blocks/arrowBlock"+dir+".png"));
-		pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
-		pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-		icon.setBounds(x*MainGame.SPRITESIZE+7,y*MainGame.SPRITESIZE+10, 50, 50);
-	}
-	
-	public ArrowBlock(int x, int y, int points, String dir,  String name, Texture image) {
-		super(x, y, points, name, image);
+
+	public ArrowBlock(Stage stage, int x, int y, int points, String dir,  String name, Texture image) {
+		super(stage, x, y, points, name, image);
 		this.dir = dir;
 		icon = new Sprite(new Texture("blocks/arrowBlock"+dir+".png"));
 		pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));

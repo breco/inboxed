@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
+import com.inboxed.helpers.RoundController;
 import com.inboxed.main.MainGame;
-import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 public class Simirror extends Character {
 	
 	public Texture target;
 	public Array<Sprite> possibleSprites;
-	public Simirror(int x, int y, String name) {
-		super(x, y, name);
+	public Simirror(int x, int y, String name, Stage stage, RoundController round) {
+		super(x, y, name, stage,round);
 		target = new Texture(Gdx.files.internal("blocks/targetMove.png"));
 		possibleSprites = new Array<Sprite>();
 		abilityCost = 2;
@@ -38,7 +39,7 @@ public class Simirror extends Character {
 	public void getNearbyBlocks(){
 		possibleSprites.clear();
 		Sprite sprite;
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : stage.blocks.blocks){
 			if(!block.pressed && block.points > 0){
 				if((block.pos_x == pos_x -1 && block.pos_y == pos_y - 1) ||
 					(block.pos_x == pos_x + 1 && block.pos_y == pos_y + 1) ||
@@ -54,7 +55,7 @@ public class Simirror extends Character {
 		}	
 	}
 	public boolean areNearbyBlocks(){
-		for(Block block : ClassicMode.stage.blocks.blocks){
+		for(Block block : stage.blocks.blocks){
 			if(!block.pressed && block.points > 0){
 				if((block.pos_x == pos_x -1 && block.pos_y == pos_y - 1) ||
 						(block.pos_x == pos_x + 1 && block.pos_y == pos_y + 1) ||
@@ -68,7 +69,7 @@ public class Simirror extends Character {
 		return false;
 	}
 	public void ability() { //moves diagonally to the selected square
-		Block block = ClassicMode.stage.blocks.touched;
+		Block block = stage.blocks.touched;
 		if(block ==null) return;
 		if(block.pressed || block.points <= 0) return;
 		if(possibleSprites.size == 0){

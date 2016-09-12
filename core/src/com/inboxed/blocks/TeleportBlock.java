@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
+import com.inboxed.stages.Stage;
 
 /**
  * Created by victor on 1/1/16.
@@ -13,8 +14,8 @@ public class TeleportBlock extends Block {
 
     public Sprite icon;
 
-    public TeleportBlock(int x, int y, int points, String name, Texture image){
-        super(x,y,points,name,image);
+    public TeleportBlock(Stage stage,int x, int y, int points, String name, Texture image){
+        super(stage,x,y,points,name,image);
         icon = new Sprite(new Texture("blocks/teleportBlock.png"));
         pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
         pointSprite.setBounds(x* MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);

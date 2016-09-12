@@ -1,18 +1,19 @@
 package com.inboxed.blocks;
 
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
+import com.inboxed.stages.Stage;
+
+import java.util.Random;
 
 public class BackgroundBlock extends Block {
-	public BackgroundBlock(int x, int y, int points, String name, Texture image) {
-		super(x, y, points,name,image);
+	public BackgroundBlock(Stage stage, int x, int y, int points, String name, Texture image) {
+		super(stage, x, y, points,name,image);
 		pressed = true;
 	}
 	public BackgroundBlock(int x, int y, int points, String name, String dir) {

@@ -1,17 +1,17 @@
 package com.inboxed.buttons;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.inboxed.screens.ClassicMode;
+
 public class EndButton {
 	public Sprite sprite;
 	
 	public String name;
 	public EndButton(String name){
 		this.name = name;
-		sprite = new Sprite(new Texture(Gdx.files.internal("hud/"+name+".png")));
+		sprite = new Sprite(ClassicMode.images.end);
 		sprite.setBounds(10,170, 65, 65);
 
 	}

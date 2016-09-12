@@ -3,14 +3,15 @@ package com.inboxed.blocks;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.inboxed.characters.Character;
 import com.inboxed.main.MainGame;
 import com.inboxed.screens.ClassicMode;
-import com.inboxed.characters.Character;
+import com.inboxed.stages.Stage;
 
 public class TornadoBlock extends Block{
 	public Sprite icon;
-	public TornadoBlock(int x, int y, int points, String name, Texture image){
-		super(x,y,points,name,image);
+	public TornadoBlock(Stage stage, int x, int y, int points, String name, Texture image){
+		super(stage, x,y,points,name,image);
 		icon = new Sprite(new Texture("blocks/tornadoBlock.png"));
 		pointSprite = new Sprite(ClassicMode.images.specialPoints.get(points-1));
 		pointSprite.setBounds(x*MainGame.SPRITESIZE, y*MainGame.SPRITESIZE, MainGame.SPRITESIZE, MainGame.SPRITESIZE);

@@ -1,5 +1,6 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.inboxed.blocks.Block;
@@ -17,8 +18,8 @@ public class RapidRiver extends Stage{
     private int width,height;
     private Array<Block> deleted;
     private int blockedProbability, teleportProbability;
-    public RapidRiver(String name) {
-        super(name);
+    public RapidRiver(String name, OrthographicCamera cam) {
+        super(name, cam);
         rand = new Random();
         width = 8;
         height = 6;
@@ -70,12 +71,12 @@ public class RapidRiver extends Stage{
             r = rand.nextInt(100)+1;
             if(r <= teleportProbability){
                 System.out.println("adding teleportBlock on left");
-                blocks.blocks.add(new TeleportBlock(0,i,rand.nextInt(6)+1,"rapidRiver",ClassicMode.images.getTexture("C0")));
+                blocks.blocks.add(new TeleportBlock(this,0,i,rand.nextInt(6)+1,"rapidRiver",ClassicMode.images.getTexture("C0")));
             }
             else if(r <= blockedProbability){
-                blocks.blocks.add(new NormalBlock(0,i,0,"rapidRiver",ClassicMode.images.getTexture("C0")));
+                blocks.blocks.add(new NormalBlock(this,0,i,0,"rapidRiver",ClassicMode.images.getTexture("C0")));
             }
-            else blocks.blocks.add(new NormalBlock(0,i,rand.nextInt(6)+1,"rapidRiver",ClassicMode.images.getTexture("C0")));
+            else blocks.blocks.add(new NormalBlock(this,0,i,rand.nextInt(6)+1,"rapidRiver",ClassicMode.images.getTexture("C0")));
         }
         r = rand.nextInt(100)+1;
         if(r <= teleportProbability){
@@ -86,7 +87,7 @@ public class RapidRiver extends Stage{
             }
             Block block = blocks.blocks.get(r);
             blocks.blocks.removeIndex(r);
-            blocks.blocks.add(new TeleportBlock(block.pos_x,block.pos_y,block.points,"rapidRiver",block.sprite.getTexture()));
+            blocks.blocks.add(new TeleportBlock(this,block.pos_x,block.pos_y,block.points,"rapidRiver",block.sprite.getTexture()));
 
 
         }
@@ -101,8 +102,8 @@ public class RapidRiver extends Stage{
         blocks.draw(batch);
 
     }
-    public void input(){
-        blocks.input(ClassicMode.cam);
+    public void input(OrthographicCamera cam){
+        blocks.input(cam);
     }
 
 }

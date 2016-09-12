@@ -2,60 +2,52 @@ package com.inboxed.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.inboxed.inputs.MyGestures;
 import com.inboxed.main.MainGame;
-
-
+import com.inboxed.setuphud.CharacterSelect;
 
 /**
- * Cr eated by victor on 1/2/16.
+ * Created by victor on 6/11/16.
  */
-public class WinnerScreen implements Screen {
-
+public class OnlineSetup implements Screen {
     public MainGame game;
     public static OrthographicCamera cam;
     public Vector3 vec;
-    public Sprite ok, winner;
-    public BitmapFont font;
-    public String winnerName;
-    public WinnerScreen(MainGame game, String winner){
-        winnerName = winner;
-        ok = new Sprite(new Texture(Gdx.files.internal("setupHud/ok.png")));
-        ok.setBounds(MainGame.width/2, 10, MainGame.SPRITESIZE, MainGame.SPRITESIZE);
-        this.winner = new Sprite(new Texture(Gdx.files.internal("characters/"+winner+".png")));
-        this.winner.setBounds(MainGame.width/2,MainGame.height/2,MainGame.SPRITESIZE,MainGame.SPRITESIZE);
-        font = new BitmapFont();
-        font.getData().setScale(2);
-        font.setColor(Color.BLACK);
+    //
+    public static CharacterSelect characterSelect;
+    public OnlineSetup(MainGame game){
+
         this.game = game;
         cam = new OrthographicCamera();
         vec = new Vector3();
         cam.setToOrtho(false, MainGame.width, MainGame.height);
-
+        //
+        characterSelect = new CharacterSelect(1);
+        characterSelect.showing = true;
 
     }
     public void input(){
         if (MyGestures.isTap()){
             vec.set(MyGestures.tapX,MyGestures.tapY,0);
             cam.unproject(vec);
-            if(ok.getBoundingRectangle().contains(vec.x,vec.y)) game.setScreen(new SelectMode(game));
-
+            if(characterSelect.showing){
+                characterSelect.input(vec);
+                return;
+            }
         }
     }
     public void update(){
+        if(characterSelect.okPressed){
 
+            //join room screen
+            game.setScreen(new JoinRoom(game,characterSelect.playerNames.first()));
+        }
     }
     public void draw(){
-        ok.draw(game.batch);
-        winner.draw(game.batch);
-        font.draw(game.batch,winnerName+" wins!",MainGame.width/2 - 100, MainGame.height - 30);
+        if(characterSelect.showing) characterSelect.draw(game.batch);
     }
 
     @Override

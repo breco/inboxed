@@ -1,8 +1,8 @@
 package com.inboxed.stages;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.inboxed.blocks.Block;
-import com.inboxed.screens.ClassicMode;
 
 import java.util.Random;
 
@@ -10,8 +10,8 @@ public class AncientRuins extends Stage{
 
     private Random rand;
     private int restoreProb;
-    public AncientRuins(String name) {
-        super(name);
+    public AncientRuins(String name, OrthographicCamera cam ) {
+        super(name, cam );
         rand = new Random();
         for(Block block : blocks.blocks){
             block.restore(rand.nextInt(2)+1);
@@ -42,8 +42,8 @@ public class AncientRuins extends Stage{
         blocks.draw(batch);
 
     }
-    public void input(){
-        blocks.input(ClassicMode.cam);
+    public void input(OrthographicCamera cam){
+        blocks.input(cam);
     }
 
 }
